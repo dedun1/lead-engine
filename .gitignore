@@ -8,3 +8,6 @@ dist/
 .DS_Store
 playwright/.cache/
 electron-builder.cache/
+
+# Claude Code per-machine permissions — never shared
+.claude/settings.local.json
