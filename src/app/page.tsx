@@ -1,14 +1,20 @@
-// Placeholder home route. Prompt 5 replaces this with the default-landing
-// redirect logic from PROJECT_SPEC §12 once auth + the (app) sidebar shell exist.
-export default function HomePage() {
-  return (
-    <main className="flex min-h-screen items-center justify-center px-6">
-      <div className="text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">Lead Engine</h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Project scaffolded. Phase 1 in progress.
-        </p>
-      </div>
-    </main>
-  );
+import { redirect } from 'next/navigation';
+import { createClient } from '@/lib/supabase/server';
+
+// Default landing logic per PROJECT_SPEC §12:
+//   1. If active triggers exist → /hot-list
+//   2. Else if leads in 'queued' or callbacks due → /call-queue
+//   3. Else → /pipeline
+//
+// Phase 1 has no trigger / queue data yet, so we always fall through to
+// /hot-list (whose empty state is the friendliest first-login surface).
+// The richer branching reads land alongside Phase 5 / Phase 7 — both
+// trigger_events and a status-filtered leads query become available there.
+export default async function RootPage() {
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) redirect('/login');
+  redirect('/hot-list');
 }

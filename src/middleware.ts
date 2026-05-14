@@ -12,7 +12,11 @@ import { NextResponse, type NextRequest } from 'next/server';
 import type { Database } from '@/types/database.types';
 
 // Routes accessible without an authenticated session.
-const PUBLIC_PATHS = ['/login', '/auth/callback', '/auth/confirm'];
+// /callback handles the magic-link code exchange — it lives at
+// src/app/(auth)/callback/route.ts. Route groups don't appear in URLs, so the
+// public-facing path is /callback (not /auth/callback). /auth/confirm is kept
+// available for Supabase's PKCE confirm flow if we ever enable it.
+const PUBLIC_PATHS = ['/login', '/callback', '/auth/confirm'];
 
 function isPublicPath(pathname: string): boolean {
   return PUBLIC_PATHS.some((p) => pathname === p || pathname.startsWith(`${p}/`));
