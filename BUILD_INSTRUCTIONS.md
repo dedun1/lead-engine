@@ -224,8 +224,8 @@ lead-engine/
 │       └── tokens.css           ← Tailwind v4 @theme tokens
 ├── supabase/
 │   ├── migrations/              ← one file per migration, timestamped
-│   │   ├── 20260514_001_init.sql
-│   │   ├── 20260514_002_seed_naics.sql
+│   │   ├── 20260514120000_init.sql
+│   │   ├── 20260514120100_seed_naics.sql
 │   │   └── ...
 │   ├── functions/               ← Edge Functions
 │   │   ├── trigger-scan/
@@ -304,29 +304,45 @@ GH_TOKEN=                        # GitHub personal access token for releases
 
 **One migration file per logical change.** Don't batch unrelated changes.
 
-Naming: `YYYYMMDD_NNN_description.sql` where NNN is the sequence number that day.
+**Naming:** `YYYYMMDDHHMMSS_description.sql` — a single 14-digit timestamp
+followed by an underscore and a description. **No underscore inside the
+timestamp.** The Supabase CLI parses the leading digits up to the first
+underscore as the migration version; any `YYYYMMDD_NNN_...` variant collapses
+to the 8-digit date and collides the moment a second migration is created
+the same day.
 
-Example sequence for Phase 1:
+Space migrations by 60 seconds (the HHMMSS portion) so they sort in order
+without colliding. Easiest way: `supabase migration new <name>` — the CLI
+auto-generates the correct 14-digit timestamp.
+
+**Recovery if you accidentally push the legacy `_NNN_` format:** drop any
+half-applied tables, delete the orphan row from
+`supabase_migrations.schema_migrations` (use `delete from ... where name = '<table>'`)
+via the dashboard SQL Editor, rename the file to the 14-digit format,
+and re-run `supabase db push`.
+
+**Example sequence — Phase 1 + 4 (the actual files in `supabase/migrations/`):**
+
 ```
-20260514_001_init_extensions.sql           ← pgcrypto, citext, uuid-ossp
-20260514_002_team_members.sql
-20260514_003_niches.sql
-20260514_004_niche_intelligence.sql
-20260514_005_niche_learned_intelligence.sql
-20260514_006_leads.sql
-20260514_007_blocked_fingerprints.sql
-20260514_008_call_attempts.sql
-20260514_009_pitch_opener_variants.sql
-20260514_010_trigger_events.sql
-20260514_011_lead_activities.sql
-20260514_012_generation_jobs.sql
-20260514_013_api_keys.sql
-20260514_014_pricing_config.sql
-20260514_015_scraper_health.sql
-20260514_016_weekly_insights.sql
-20260514_017_indexes.sql
-20260514_018_rls_policies.sql
-20260514_019_seed_pricing_config.sql
+20260514120000_init_extensions.sql          ← pgcrypto, citext, uuid-ossp
+20260514120100_team_members.sql             ← table per file from here on
+20260514120200_niches.sql
+20260514120300_pricing_config.sql
+20260514120400_scraper_health.sql
+20260514120500_weekly_insights.sql
+20260514120600_niche_intelligence.sql
+20260514120700_niche_learned_intelligence.sql
+20260514120800_leads.sql
+20260514120900_blocked_fingerprints.sql
+20260514121000_api_keys.sql
+20260514121100_call_attempts.sql
+20260514121200_pitch_opener_variants.sql
+20260514121300_trigger_events.sql
+20260514121400_lead_activities.sql
+20260514121500_generation_jobs.sql
+20260514121600_indexes.sql
+20260514121700_rls_policies.sql
+20260514121800_seed_pricing_config.sql
 ```
 
 Run with Supabase CLI: `supabase db push`. Generate TS types after every schema change: `pnpm run generate-types`.
@@ -507,7 +523,7 @@ Set up Supabase:
 - Create src/lib/supabase/client.ts, server.ts, admin.ts
 - Create src/middleware.ts that protects all /(app)/ routes
 - Create supabase/migrations/ folder
-- Create the first migration: 20260514_001_init_extensions.sql with pgcrypto, citext, uuid-ossp
+- Create the first migration: 20260514120000_init_extensions.sql with pgcrypto, citext, uuid-ossp
 - Create scripts/generate-types.ts that pulls database.types.ts from Supabase
 Do NOT create any feature tables yet. Foundation only.
 ```
