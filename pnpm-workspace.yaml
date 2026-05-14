@@ -1,0 +1,5 @@
+allowBuilds:
+  electron: false
+  esbuild: true
+  playwright: false
+  unrs-resolver: true
