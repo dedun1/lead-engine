@@ -62,6 +62,18 @@ tsx                            4.x         // run TS scripts directly
 dotenv                         16.x
 ```
 
+**Supabase CLI** (separate install, NOT a package dep — kept off the project
+manifest because the Supabase team explicitly blocks global npm installs):
+
+- **Windows:** `scoop install supabase` (install [Scoop](https://scoop.sh) first if needed)
+- **macOS:** `brew install supabase/tap/supabase`
+- **Linux:** download the binary from <https://github.com/supabase/cli/releases>
+
+Do NOT use `npm install -g supabase` — Supabase's postinstall script throws on
+global installs intentionally. This is a known Supabase policy, not a workaround.
+
+Verify with `supabase --version`.
+
 ### Required peer deps
 
 Not features — build-time / peer / ambient-type deps that the pinned stack
