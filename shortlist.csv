@@ -1,0 +1,209 @@
+naics_code,name,parent_sector,country_scope,weather_sensitive,fit_reason
+238160,Roofing Contractors,Construction,"US,CA,UK,AU",true,Storm-driven urgency + owner-operated small shops + missed call lifecycle
+238210,Electrical Contractors and Other Wiring Installation Contractors,Construction,"US,CA,UK,AU",false,Phone-heavy quote and dispatch workflow
+238220,Plumbing Heating and Air-Conditioning Contractors,Construction,"US,CA,UK,AU",true,Emergency calls + appointment scheduling + storm-driven HVAC demand
+238110,Poured Concrete Foundation and Structure Contractors,Construction,"US,CA,UK,AU",false,Quote-driven sales cycle owner-operated
+238130,Framing Contractors,Construction,"US,CA,UK,AU",false,Quote follow-up automation fit
+238140,Masonry Contractors,Construction,"US,CA,UK,AU",false,Quote-driven owner-operated
+238150,Glass and Glazing Contractors,Construction,"US,CA,UK,AU",false,Quote and install scheduling
+238170,Siding Contractors,Construction,"US,CA,UK,AU",true,Storm-driven exterior demand
+238190,Other Foundation Structure and Building Exterior Contractors,Construction,"US,CA,UK,AU",false,Quote-driven owner-operated
+238290,Other Building Equipment Contractors,Construction,"US,CA,UK,AU",false,Phone dispatch heavy
+238310,Drywall and Insulation Contractors,Construction,"US,CA,UK,AU",false,Quote follow-up automation fit
+238320,Painting and Wall Covering Contractors,Construction,"US,CA,UK,AU",false,Quote-heavy small operator
+238330,Flooring Contractors,Construction,"US,CA,UK,AU",false,Quote-driven owner-operated
+238340,Tile and Terrazzo Contractors,Construction,"US,CA,UK,AU",false,Quote-driven owner-operated
+238350,Finish Carpentry Contractors,Construction,"US,CA,UK,AU",false,Quote-driven owner-operated
+238390,Other Building Finishing Contractors,Construction,"US,CA,UK,AU",false,Quote-driven owner-operated
+238910,Site Preparation Contractors,Construction,"US,CA,UK,AU",false,Quote-driven owner-operated
+238990,All Other Specialty Trade Contractors,Construction,"US,CA,UK,AU",false,Phone-dispatch heavy
+236115,New Single-Family Housing Construction (except For-Sale Builders),Construction,"US,CA,UK,AU",false,Long sales cycle benefits from follow-up automation
+236118,Residential Remodelers,Construction,"US,CA,UK,AU",false,Quote follow-up + appointment automation
+561730,Landscaping Services,Administrative Services,"US,CA,UK,AU",true,Seasonal demand + recurring service appointments
+561720,Janitorial Services,Administrative Services,"US,CA,UK,AU",false,Recurring contracts + quote automation
+561740,Carpet and Upholstery Cleaning Services,Administrative Services,"US,CA,UK,AU",false,Appointment-driven small operator
+561790,Other Services to Buildings and Dwellings,Administrative Services,"US,CA,UK,AU",false,Phone-heavy small operator
+562910,Remediation Services,Administrative Services,"US,CA,UK,AU",true,Emergency response after storms/floods
+562998,All Other Miscellaneous Waste Management Services,Administrative Services,"US,CA,UK,AU",false,Phone-dispatch operator
+561622,Locksmiths,Administrative Services,"US,CA,UK,AU",false,Emergency call response + missed call recovery
+561621,Security Systems Services (except Locksmiths),Administrative Services,"US,CA,UK,AU",false,Appointment-driven sales cycle
+811111,General Automotive Repair,Repair and Maintenance,"US,CA,UK,AU",false,Appointment booking + reminder automation
+811112,Automotive Exhaust System Repair,Repair and Maintenance,"US,CA,UK,AU",false,Appointment-driven small shop
+811113,Automotive Transmission Repair,Repair and Maintenance,"US,CA,UK,AU",false,Quote and appointment automation
+811118,Other Automotive Mechanical and Electrical Repair and Maintenance,Repair and Maintenance,"US,CA,UK,AU",false,Appointment-driven small shop
+811121,Automotive Body Paint and Interior Repair and Maintenance,Repair and Maintenance,"US,CA,UK,AU",false,Quote follow-up + appointment fit
+811122,Automotive Glass Replacement Shops,Repair and Maintenance,"US,CA,UK,AU",false,Emergency replacement + appointment
+811191,Automotive Oil Change and Lubrication Shops,Repair and Maintenance,"US,CA,UK,AU",false,Recurring appointment reminder
+811192,Car Washes,Repair and Maintenance,"US,CA,UK,AU",false,Loyalty + appointment automation
+811198,All Other Automotive Repair and Maintenance,Repair and Maintenance,"US,CA,UK,AU",false,Appointment-driven small operator
+811211,Consumer Electronics Repair,Repair and Maintenance,"US,CA,UK,AU",false,Quote and pickup scheduling
+811212,Computer and Office Machine Repair and Maintenance,Repair and Maintenance,"US,CA,UK,AU",false,Quote and appointment automation
+811213,Communication Equipment Repair and Maintenance,Repair and Maintenance,"US,CA,UK,AU",false,Service appointment fit
+811219,Other Electronic and Precision Equipment Repair and Maintenance,Repair and Maintenance,"US,CA,UK,AU",false,Appointment-driven small shop
+811310,Commercial and Industrial Machinery and Equipment Repair and Maintenance,Repair and Maintenance,"US,CA,UK,AU",false,B2B service appointment automation
+811411,Home and Garden Equipment Repair and Maintenance,Repair and Maintenance,"US,CA,UK,AU",false,Appointment-driven small shop
+811412,Appliance Repair and Maintenance,Repair and Maintenance,"US,CA,UK,AU",false,Service call scheduling
+811420,Reupholstery and Furniture Repair,Repair and Maintenance,"US,CA,UK,AU",false,Quote and pickup scheduling
+811430,Footwear and Leather Goods Repair,Repair and Maintenance,"US,CA,UK,AU",false,Pickup and dropoff scheduling
+811490,Other Personal and Household Goods Repair and Maintenance,Repair and Maintenance,"US,CA,UK,AU",false,Quote and appointment fit
+621210,Offices of Dentists,Health Care,"US,CA,UK,AU",false,Appointment reminder + recall automation high fit
+621310,Offices of Chiropractors,Health Care,"US,CA,UK,AU",false,Recurring appointment automation
+621320,Offices of Optometrists,Health Care,"US,CA,UK,AU",false,Annual exam reminder automation
+621330,Offices of Mental Health Practitioners (except Physicians),Health Care,"US,CA,UK,AU",false,Appointment reminder + no-show recovery
+621340,Offices of Physical Occupational and Speech Therapists and Audiologists,Health Care,"US,CA,UK,AU",false,Recurring appointment automation
+621391,Offices of Podiatrists,Health Care,"US,CA,UK,AU",false,Appointment reminder fit
+621399,Offices of All Other Miscellaneous Health Practitioners,Health Care,"US,CA,UK,AU",false,Appointment reminder fit
+621498,All Other Outpatient Care Centers,Health Care,"US,CA,UK,AU",false,Appointment and intake automation
+621511,Medical Laboratories,Health Care,"US,CA,UK,AU",false,Result delivery and appointment automation
+621512,Diagnostic Imaging Centers,Health Care,"US,CA,UK,AU",false,Appointment reminder and intake fit
+541921,Photography Studios Portrait,Professional Services,"US,CA,UK,AU",false,Booking automation + reminder fit
+541922,Commercial Photography,Professional Services,"US,CA,UK,AU",false,Quote and booking automation
+541921,Wedding Photography,Professional Services,"US,CA,UK,AU",false,Long sales cycle benefits from automation
+812111,Barber Shops,Personal Services,"US,CA,UK,AU",false,Appointment booking + reminder
+812112,Beauty Salons,Personal Services,"US,CA,UK,AU",false,Appointment booking + recall fit
+812113,Nail Salons,Personal Services,"US,CA,UK,AU",false,Recurring appointment automation
+812191,Diet and Weight Reducing Centers,Personal Services,"US,CA,UK,AU",false,Recurring program + reminder fit
+812199,Other Personal Care Services,Personal Services,"US,CA,UK,AU",false,Appointment automation fit
+621498,Med Spas (Outpatient Care Centers),Health Care,"US,CA,UK,AU",false,High-ticket appointment + recall automation high fit
+812910,Pet Care (except Veterinary) Services,Personal Services,"US,CA,UK,AU",false,Recurring booking automation
+541940,Veterinary Services,Professional Services,"US,CA,UK,AU",false,Appointment + reminder + recall automation high fit
+812930,Parking Lots and Garages,Personal Services,"US,CA,UK,AU",false,Less ideal fit (skip in pitch prioritization)
+532111,Passenger Car Rental,Real Estate Rental,"US,CA,UK,AU",false,Booking and reminder automation
+531210,Offices of Real Estate Agents and Brokers,Real Estate,"US,CA,UK,AU",false,Lead follow-up automation high fit
+531311,Residential Property Managers,Real Estate,"US,CA,UK,AU",false,Tenant inquiry + maintenance dispatch
+531312,Nonresidential Property Managers,Real Estate,"US,CA,UK,AU",false,B2B service appointment automation
+531390,Other Activities Related to Real Estate,Real Estate,"US,CA,UK,AU",false,Lead follow-up automation
+541110,Offices of Lawyers,Professional Services,"US,CA,UK,AU",false,Intake automation + missed call recovery
+541199,All Other Legal Services,Professional Services,"US,CA,UK,AU",false,Intake automation fit
+541211,Offices of Certified Public Accountants,Professional Services,"US,CA,UK,AU",false,Annual filing reminder automation
+541213,Tax Preparation Services,Professional Services,"US,CA,UK,AU",false,Seasonal appointment automation
+541214,Payroll Services,Professional Services,"US,CA,UK,AU",false,Client onboarding automation
+541219,Other Accounting Services,Professional Services,"US,CA,UK,AU",false,Appointment and onboarding automation
+541320,Landscape Architectural Services,Professional Services,"US,CA,UK,AU",false,Quote and proposal automation
+541330,Engineering Services,Professional Services,"US,CA,UK,AU",false,B2B proposal follow-up
+541340,Drafting Services,Professional Services,"US,CA,UK,AU",false,Quote-driven small operator
+541350,Building Inspection Services,Professional Services,"US,CA,UK,AU",false,Appointment scheduling fit
+541360,Geophysical Surveying and Mapping Services,Professional Services,"US,CA,UK,AU",false,B2B quote follow-up
+541370,Surveying and Mapping (except Geophysical) Services,Professional Services,"US,CA,UK,AU",false,Quote-driven small operator
+541380,Testing Laboratories,Professional Services,"US,CA,UK,AU",false,B2B appointment automation
+541410,Interior Design Services,Professional Services,"US,CA,UK,AU",false,Quote and consultation automation
+541420,Industrial Design Services,Professional Services,"US,CA,UK,AU",false,B2B proposal follow-up
+541430,Graphic Design Services,Professional Services,"US,CA,UK,AU",false,Quote follow-up automation
+541490,Other Specialized Design Services,Professional Services,"US,CA,UK,AU",false,Quote-driven small operator
+541511,Custom Computer Programming Services,Professional Services,"US,CA,UK,AU",false,B2B proposal follow-up
+541512,Computer Systems Design Services,Professional Services,"US,CA,UK,AU",false,B2B proposal follow-up
+541519,Other Computer Related Services,Professional Services,"US,CA,UK,AU",false,Quote-driven small operator
+541611,Administrative Management and General Management Consulting Services,Professional Services,"US,CA,UK,AU",false,B2B proposal automation
+541612,Human Resources Consulting Services,Professional Services,"US,CA,UK,AU",false,B2B proposal automation
+541613,Marketing Consulting Services,Professional Services,"US,CA,UK,AU",false,B2B proposal automation
+541614,Process Physical Distribution and Logistics Consulting Services,Professional Services,"US,CA,UK,AU",false,B2B proposal automation
+541618,Other Management Consulting Services,Professional Services,"US,CA,UK,AU",false,B2B proposal automation
+541620,Environmental Consulting Services,Professional Services,"US,CA,UK,AU",false,B2B proposal automation
+541690,Other Scientific and Technical Consulting Services,Professional Services,"US,CA,UK,AU",false,B2B proposal automation
+541810,Advertising Agencies,Professional Services,"US,CA,UK,AU",false,Client follow-up automation
+541820,Public Relations Agencies,Professional Services,"US,CA,UK,AU",false,Client follow-up automation
+541830,Media Buying Agencies,Professional Services,"US,CA,UK,AU",false,Client follow-up automation
+541850,Outdoor Advertising,Professional Services,"US,CA,UK,AU",false,B2B quote follow-up
+541860,Direct Mail Advertising,Professional Services,"US,CA,UK,AU",false,B2B quote follow-up
+541870,Advertising Material Distribution Services,Professional Services,"US,CA,UK,AU",false,B2B quote follow-up
+541890,Other Services Related to Advertising,Professional Services,"US,CA,UK,AU",false,B2B quote follow-up
+722511,Full-Service Restaurants,Accommodation and Food Services,"US,CA,UK,AU",false,Reservation and review-response automation
+722513,Limited-Service Restaurants,Accommodation and Food Services,"US,CA,UK,AU",false,Review-response and recall automation
+722514,Cafeterias Grill Buffets and Buffets,Accommodation and Food Services,"US,CA,UK,AU",false,Review-response automation
+722515,Snack and Nonalcoholic Beverage Bars,Accommodation and Food Services,"US,CA,UK,AU",false,Loyalty + review automation
+722410,Drinking Places (Alcoholic Beverages),Accommodation and Food Services,"US,CA,UK,AU",false,Event booking automation
+721110,Hotels (except Casino Hotels) and Motels,Accommodation and Food Services,"US,CA,UK,AU",false,Reservation and review automation
+721120,Casino Hotels,Accommodation and Food Services,"US,CA,UK,AU",false,Reservation automation
+721191,Bed-and-Breakfast Inns,Accommodation and Food Services,"US,CA,UK,AU",false,Reservation automation fit
+721199,All Other Traveler Accommodation,Accommodation and Food Services,"US,CA,UK,AU",false,Reservation automation fit
+721211,RV (Recreational Vehicle) Parks and Campgrounds,Accommodation and Food Services,"US,CA,UK,AU",false,Booking automation
+721214,Recreational and Vacation Camps (except Campgrounds),Accommodation and Food Services,"US,CA,UK,AU",false,Seasonal booking automation
+721310,Rooming and Boarding Houses Dormitories and Workers Camps,Accommodation and Food Services,"US,CA,UK,AU",false,Less ideal fit
+713940,Fitness and Recreational Sports Centers,Arts Entertainment Recreation,"US,CA,UK,AU",false,Membership recall automation
+713950,Bowling Centers,Arts Entertainment Recreation,"US,CA,UK,AU",false,Reservation automation
+713910,Golf Courses and Country Clubs,Arts Entertainment Recreation,"US,CA,UK,AU",false,Tee time booking automation
+713920,Skiing Facilities,Arts Entertainment Recreation,"US,CA,UK,AU",true,Weather-dependent + booking automation
+713930,Marinas,Arts Entertainment Recreation,"US,CA,UK,AU",true,Seasonal booking automation
+713990,All Other Amusement and Recreation Industries,Arts Entertainment Recreation,"US,CA,UK,AU",false,Booking automation fit
+712110,Museums,Arts Entertainment Recreation,"US,CA,UK,AU",false,Event booking automation
+712120,Historical Sites,Arts Entertainment Recreation,"US,CA,UK,AU",false,Tour booking automation
+712130,Zoos and Botanical Gardens,Arts Entertainment Recreation,"US,CA,UK,AU",false,Less ideal fit
+712190,Nature Parks and Other Similar Institutions,Arts Entertainment Recreation,"US,CA,UK,AU",false,Less ideal fit
+711211,Sports Teams and Clubs,Arts Entertainment Recreation,"US,CA,UK,AU",false,Ticket and reservation automation
+711212,Racetracks,Arts Entertainment Recreation,"US,CA,UK,AU",false,Less ideal fit
+713210,Casinos (except Casino Hotels),Arts Entertainment Recreation,"US,CA,UK,AU",false,Less ideal fit
+448150,Clothing Accessories Stores,Retail Trade,"US,CA,UK,AU",false,Less ideal (foot-traffic dependent)
+451211,Book Stores,Retail Trade,"US,CA,UK,AU",false,Less ideal fit
+453110,Florists,Retail Trade,"US,CA,UK,AU",false,Holiday-driven order automation
+453220,Gift Novelty and Souvenir Stores,Retail Trade,"US,CA,UK,AU",false,Less ideal fit
+453910,Pet and Pet Supplies Stores,Retail Trade,"US,CA,UK,AU",false,Less ideal fit
+453920,Art Dealers,Retail Trade,"US,CA,UK,AU",false,High-ticket consultation automation
+453998,All Other Miscellaneous Store Retailers (except Tobacco Stores),Retail Trade,"US,CA,UK,AU",false,Less ideal fit
+444210,Outdoor Power Equipment Stores,Retail Trade,"US,CA,UK,AU",false,Quote and service automation
+444220,Nursery Garden Center and Farm Supply Stores,Retail Trade,"US,CA,UK,AU",true,Seasonal demand automation
+541410,Tattoo Parlors,Personal Services,"US,CA,UK,AU",false,Appointment booking + recall fit
+711410,Agents and Managers for Artists Athletes Entertainers and Other Public Figures,Arts Entertainment Recreation,"US,CA,UK,AU",false,Client follow-up automation
+711510,Independent Artists Writers and Performers,Arts Entertainment Recreation,"US,CA,UK,AU",false,Booking automation
+611110,Elementary and Secondary Schools,Educational Services,"US,CA,UK,AU",false,Less ideal fit (institutional)
+611410,Business and Secretarial Schools,Educational Services,"US,CA,UK,AU",false,Enrollment automation
+611420,Computer Training,Educational Services,"US,CA,UK,AU",false,Enrollment automation
+611430,Professional and Management Development Training,Educational Services,"US,CA,UK,AU",false,Enrollment automation
+611511,Cosmetology and Barber Schools,Educational Services,"US,CA,UK,AU",false,Enrollment + appointment automation
+611512,Flight Training,Educational Services,"US,CA,UK,AU",false,High-ticket consultation automation
+611513,Apprenticeship Training,Educational Services,"US,CA,UK,AU",false,Enrollment automation
+611519,Other Technical and Trade Schools,Educational Services,"US,CA,UK,AU",false,Enrollment automation
+611610,Fine Arts Schools,Educational Services,"US,CA,UK,AU",false,Enrollment + recurring booking
+611620,Sports and Recreation Instruction,Educational Services,"US,CA,UK,AU",false,Enrollment + recurring class automation
+611630,Language Schools,Educational Services,"US,CA,UK,AU",false,Enrollment automation
+611691,Exam Preparation and Tutoring,Educational Services,"US,CA,UK,AU",false,Recurring session automation
+611692,Automobile Driving Schools,Educational Services,"US,CA,UK,AU",false,Appointment booking automation
+611699,All Other Miscellaneous Schools and Instruction,Educational Services,"US,CA,UK,AU",false,Enrollment automation
+624410,Child Day Care Services,Health Care and Social Assistance,"US,CA,UK,AU",false,Enrollment + reminder automation
+624310,Vocational Rehabilitation Services,Health Care and Social Assistance,"US,CA,UK,AU",false,Appointment automation
+624190,Other Individual and Family Services,Health Care and Social Assistance,"US,CA,UK,AU",false,Appointment automation
+484121,General Freight Trucking Long-Distance Truckload,Transportation,"US,CA,UK,AU",false,B2B dispatch automation
+484122,General Freight Trucking Long-Distance Less Than Truckload,Transportation,"US,CA,UK,AU",false,B2B dispatch automation
+484220,Specialized Freight (except Used Goods) Trucking Local,Transportation,"US,CA,UK,AU",false,B2B dispatch automation
+485310,Taxi Service,Transportation,"US,CA,UK,AU",false,Booking automation
+485320,Limousine Service,Transportation,"US,CA,UK,AU",false,Booking automation
+488510,Freight Transportation Arrangement,Transportation,"US,CA,UK,AU",false,B2B quote automation
+492110,Couriers and Express Delivery Services,Transportation,"US,CA,UK,AU",false,B2B booking automation
+492210,Local Messengers and Local Delivery,Transportation,"US,CA,UK,AU",false,Booking automation
+115210,Support Activities for Animal Production,Agriculture,"US,CA,UK,AU",false,Less ideal fit
+115310,Support Activities for Forestry,Agriculture,"US,CA,UK,AU",false,Less ideal fit
+115110,Support Activities for Crop Production,Agriculture,"US,CA,UK,AU",false,Less ideal fit
+561311,Employment Placement Agencies,Administrative Services,"US,CA,UK,AU",false,Candidate follow-up automation
+561312,Executive Search Services,Administrative Services,"US,CA,UK,AU",false,Candidate follow-up automation
+561320,Temporary Help Services,Administrative Services,"US,CA,UK,AU",false,Candidate booking automation
+561330,Professional Employer Organizations,Administrative Services,"US,CA,UK,AU",false,Client onboarding automation
+561410,Document Preparation Services,Administrative Services,"US,CA,UK,AU",false,Less ideal fit
+561421,Telephone Answering Services,Administrative Services,"US,CA,UK,AU",false,Direct competitor / partner opportunity
+561422,Telemarketing Bureaus and Other Contact Centers,Administrative Services,"US,CA,UK,AU",false,B2B service automation
+561431,Private Mail Centers,Administrative Services,"US,CA,UK,AU",false,Less ideal fit
+561439,Other Business Service Centers (including Copy Shops),Administrative Services,"US,CA,UK,AU",false,Less ideal fit
+561440,Collection Agencies,Administrative Services,"US,CA,UK,AU",false,B2B follow-up automation
+561450,Credit Bureaus,Administrative Services,"US,CA,UK,AU",false,Less ideal fit
+561491,Repossession Services,Administrative Services,"US,CA,UK,AU",false,Less ideal fit
+561492,Court Reporting and Stenotype Services,Administrative Services,"US,CA,UK,AU",false,B2B booking automation
+561499,All Other Business Support Services,Administrative Services,"US,CA,UK,AU",false,B2B service automation
+561510,Travel Agencies,Administrative Services,"US,CA,UK,AU",false,Booking and follow-up automation
+561520,Tour Operators,Administrative Services,"US,CA,UK,AU",false,Booking automation
+561591,Convention and Visitors Bureaus,Administrative Services,"US,CA,UK,AU",false,Less ideal fit
+561599,All Other Travel Arrangement and Reservation Services,Administrative Services,"US,CA,UK,AU",false,Booking automation
+561611,Investigation Services,Administrative Services,"US,CA,UK,AU",false,B2B service automation
+561612,Security Guards and Patrol Services,Administrative Services,"US,CA,UK,AU",false,B2B service automation
+561613,Armored Car Services,Administrative Services,"US,CA,UK,AU",false,B2B service automation
+561721,Carpet Cleaning Services,Administrative Services,"US,CA,UK,AU",false,Appointment-driven small operator
+561722,Janitorial Services Window Cleaning,Administrative Services,"US,CA,UK,AU",false,Appointment-driven small operator
+532112,Passenger Car Leasing,Real Estate Rental,"US,CA,UK,AU",false,Lead follow-up automation
+532120,Truck Utility Trailer and RV (Recreational Vehicle) Rental and Leasing,Real Estate Rental,"US,CA,UK,AU",false,Booking automation
+532210,Consumer Electronics and Appliances Rental,Real Estate Rental,"US,CA,UK,AU",false,Less ideal fit
+532281,Formal Wear and Costume Rental,Real Estate Rental,"US,CA,UK,AU",false,Booking automation
+532282,Video Tape and Disc Rental,Real Estate Rental,"US,CA,UK,AU",false,Skip (dying industry)
+532283,Home Health Equipment Rental,Real Estate Rental,"US,CA,UK,AU",false,Booking automation
+532284,Recreational Goods Rental,Real Estate Rental,"US,CA,UK,AU",false,Booking automation
+532289,All Other Consumer Goods Rental,Real Estate Rental,"US,CA,UK,AU",false,Booking automation
+532411,Commercial Air Rail and Water Transportation Equipment Rental and Leasing,Real Estate Rental,"US,CA,UK,AU",false,B2B booking automation
+532412,Construction Mining and Forestry Machinery and Equipment Rental and Leasing,Real Estate Rental,"US,CA,UK,AU",false,B2B booking automation
+532420,Office Machinery and Equipment Rental and Leasing,Real Estate Rental,"US,CA,UK,AU",false,B2B booking automation
+532490,Other Commercial and Industrial Machinery and Equipment Rental and Leasing,Real Estate Rental,"US,CA,UK,AU",false,B2B booking automation
