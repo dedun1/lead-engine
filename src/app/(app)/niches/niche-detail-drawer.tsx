@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { Star, X } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import {
   Select,
@@ -20,15 +19,10 @@ import {
 } from '@/components/ui/sheet';
 import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
 import { sectorBadgeClass } from '@/lib/niches/sectors';
 import type { NicheRecord } from '@/lib/niches/types';
 import { cn } from '@/lib/utils';
+import { IntelligenceTab } from './intelligence-tab';
 
 function OverviewRow({ label, value }: { label: string; value: string }) {
   return (
@@ -155,9 +149,11 @@ export function NicheDetailDrawer({
                 />
               </TabsContent>
               <TabsContent value="intelligence" className="mt-4">
-                <p className="rounded-lg border border-border bg-card p-4 text-sm text-muted-foreground">
-                  BUILD Prompt 9 — pain points, decision makers, pitch hooks.
-                </p>
+                <IntelligenceTab
+                  nicheId={niche.id}
+                  country={country}
+                  isAdmin={isAdmin}
+                />
               </TabsContent>
             </Tabs>
 
@@ -188,18 +184,6 @@ export function NicheDetailDrawer({
                   onCheckedChange={() => onTogglePitching()}
                 />
               </div>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <span className="block w-full">
-                      <Button type="button" className="w-full" disabled>
-                        Generate intelligence card
-                      </Button>
-                    </span>
-                  </TooltipTrigger>
-                  <TooltipContent>Available in BUILD Prompt 9</TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
             </div>
           </>
         )}

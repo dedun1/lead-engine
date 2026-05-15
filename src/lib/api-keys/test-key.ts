@@ -1,26 +1,32 @@
 import Anthropic from '@anthropic-ai/sdk';
-
-const HAIKU_MODEL = 'claude-haiku-4-5-20251001';
+import { MODEL_HAIKU, assertHaikuModel } from '@/lib/ai/anthropic';
 
 export async function testDecryptedApiKey(
   service: string,
   plaintext: string,
-): Promise<{ ok: true } | { ok: false; error: string }> {
+): Promise<{ ok: true; note?: string } | { ok: false; error: string }> {
   try {
     if (service === 'anthropic') {
+      assertHaikuModel(MODEL_HAIKU);
       const client = new Anthropic({ apiKey: plaintext });
-      await client.messages.create({
-        model: HAIKU_MODEL,
-        max_tokens: 1,
-        messages: [{ role: 'user', content: 'ping' }],
+      const response = await client.messages.create({
+        model: MODEL_HAIKU,
+        max_tokens: 16,
+        messages: [
+          { role: 'user', content: 'Reply with the word OK only.' },
+        ],
       });
+      const block = response.content[0];
+      const text = block.type === 'text' ? block.text : '';
+      if (!text.toUpperCase().includes('OK')) {
+        return { ok: false, error: 'Unexpected response from Anthropic' };
+      }
       return { ok: true };
     }
-    // Other services: minimal stub until real validators land in later phases.
     if (!plaintext.trim()) {
       return { ok: false, error: 'Key is empty' };
     }
-    return { ok: true };
+    return { ok: true, note: 'Test not yet implemented' };
   } catch {
     return { ok: false, error: 'Validation request failed' };
   }
