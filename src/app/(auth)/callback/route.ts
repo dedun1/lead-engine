@@ -1,14 +1,12 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { syncTeamMemberFromAuth } from '@/lib/auth/sync-team-member';
 
-// Magic-link callback. Supabase redirects here with ?code=... after the user
-// clicks the email link. We exchange the code for a session cookie, then
-// forward the user to ?next= (preserved from /login) or root if absent.
+// Magic-link callback. Exchanges ?code= for a session, syncs team_members, then redirects.
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get('code');
   const next = requestUrl.searchParams.get('next') || '/';
-  // Only allow internal redirects — never bounce to an external host.
   const safeNext = next.startsWith('/') ? next : '/';
 
   if (!code) {
@@ -27,6 +25,13 @@ export async function GET(request: NextRequest) {
           requestUrl.origin,
         ),
       );
+    }
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (user) {
+      await syncTeamMemberFromAuth(user);
     }
   } catch {
     return NextResponse.redirect(
