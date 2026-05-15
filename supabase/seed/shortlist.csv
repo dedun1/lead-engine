@@ -1,0 +1,210 @@
+# Curated shortlist of high-fit SMB niches for Lead Engine. Source: 2022 NAICS 6-digit codes from census.gov. weather_sensitive=true means storm triggers should fire for this niche.
+naics_code,name,parent_sector,weather_sensitive
+236115,New Single-Family Housing Construction (except For-Sale Builders),Construction,true
+236116,New Multifamily Housing Construction (except For-Sale Builders),Construction,true
+236117,New Housing For-Sale Builders,Construction,true
+236118,Residential Remodelers,Construction,true
+236210,Industrial Building Construction,Construction,true
+236220,Commercial and Institutional Building Construction,Construction,true
+237110,Water and Sewer Line and Related Structures Construction,Construction,true
+237120,Oil and Gas Pipeline and Related Structures Construction,Construction,true
+237130,Power and Communication Line and Related Structures Construction,Construction,true
+237210,Land Subdivision,Construction,true
+237310,"Highway, Street, and Bridge Construction",Construction,true
+237990,Other Heavy and Civil Engineering Construction,Construction,true
+238110,Poured Concrete Foundation and Structure Contractors,Construction,true
+238120,Structural Steel and Precast Concrete Contractors,Construction,true
+238130,Framing Contractors,Construction,true
+238140,Masonry Contractors,Construction,true
+238150,Glass and Glazing Contractors,Construction,true
+238160,Roofing Contractors,Construction,true
+238170,Siding Contractors,Construction,true
+238190,"Other Foundation, Structure, and Building Exterior Contractors",Construction,true
+238210,Electrical Contractors and Other Wiring Installation Contractors,Construction,true
+238220,"Plumbing, Heating, and Air-Conditioning Contractors",Construction,true
+238290,Other Building Equipment Contractors,Construction,true
+238310,Drywall and Insulation Contractors,Construction,true
+238320,Painting and Wall Covering Contractors,Construction,true
+238330,Flooring Contractors,Construction,true
+238340,Tile and Terrazzo Contractors,Construction,true
+238350,Finish Carpentry Contractors,Construction,true
+238390,Other Building Finishing Contractors,Construction,true
+238910,Site Preparation Contractors,Construction,true
+238990,All Other Specialty Trade Contractors,Construction,true
+561730,Landscaping Services,Construction,true
+561790,Other Services to Buildings and Dwellings,Construction,true
+561710,Exterminating and Pest Control Services,Construction,false
+561720,Janitorial Services,Construction,false
+532412,"Construction, Mining, and Forestry Machinery and Equipment Rental and Leasing",Construction,true
+423390,Other Construction Material Merchant Wholesalers,Construction,false
+444110,Home Centers,Construction,false
+444120,Paint and Wallpaper Stores,Construction,false
+444130,Hardware Stores,Construction,false
+621111,Offices of Physicians (except Mental Health Specialists),Health Care,false
+621112,"Offices of Physicians, Mental Health Specialists",Health Care,false
+621210,Offices of Dentists,Health Care,false
+621310,Offices of Chiropractors,Health Care,false
+621320,Offices of Optometrists,Health Care,false
+621330,Offices of Mental Health Practitioners (except Physicians),Health Care,false
+621340,"Offices of Physical, Occupational and Speech Therapists, and Audiologists",Health Care,false
+621391,Offices of Podiatrists,Health Care,false
+621399,Offices of All Other Miscellaneous Health Practitioners,Health Care,false
+621410,Family Planning Centers,Health Care,false
+621420,Outpatient Mental Health and Substance Abuse Centers,Health Care,false
+621491,HMO Medical Centers,Health Care,false
+621492,Kidney Dialysis Centers,Health Care,false
+621493,Freestanding Ambulatory Surgical and Emergency Centers,Health Care,false
+621498,All Other Outpatient Care Centers,Health Care,false
+621511,Medical Laboratories,Health Care,false
+621512,Diagnostic Imaging Centers,Health Care,false
+621610,Home Health Care Services,Health Care,false
+621910,Ambulance Services,Health Care,false
+621991,Blood and Organ Banks,Health Care,false
+621999,All Other Miscellaneous Ambulatory Health Care Services,Health Care,false
+622110,General Medical and Surgical Hospitals,Health Care,false
+622210,Psychiatric and Substance Abuse Hospitals,Health Care,false
+622310,Specialty (except Psychiatric and Substance Abuse) Hospitals,Health Care,false
+623110,Nursing Care Facilities (Skilled Nursing Facilities),Health Care,false
+623210,Residential Intellectual and Developmental Disability Facilities,Health Care,false
+623220,Residential Mental Health and Substance Abuse Facilities,Health Care,false
+623311,Continuing Care Retirement Communities,Health Care,false
+623312,Assisted Living Facilities for the Elderly,Health Care,false
+623990,Other Residential Care Facilities,Health Care,false
+812111,Barber Shops,Personal Services,false
+812112,Beauty Salons,Personal Services,false
+812113,Nail Salons,Personal Services,false
+812191,Diet and Weight Reducing Centers,Personal Services,false
+812199,Other Personal Care Services,Personal Services,false
+812210,Funeral Homes and Funeral Services,Personal Services,false
+812220,Cemeteries and Crematories,Personal Services,false
+812310,Coin-Operated Laundries and Drycleaners,Personal Services,false
+812320,Drycleaning and Laundry Services (except Coin-Operated),Personal Services,false
+812331,Linen Supply,Personal Services,false
+812332,Industrial Launderers,Personal Services,false
+812910,Pet Care (except Veterinary) Services,Personal Services,false
+812921,Photofinishing Laboratories (except One-Hour),Personal Services,false
+812922,One-Hour Photofinishing,Personal Services,false
+812930,Parking Lots and Garages,Personal Services,false
+812990,All Other Personal Services,Personal Services,false
+811430,Footwear and Leather Goods Repair,Personal Services,false
+811490,Other Personal and Household Goods Repair and Maintenance,Personal Services,false
+611511,Cosmetology and Barber Schools,Personal Services,false
+624410,Child Care Services,Personal Services,false
+722511,Full-Service Restaurants,Food Service,false
+722513,Limited-Service Restaurants,Food Service,false
+722514,"Cafeterias, Grill Buffets, and Buffets",Food Service,false
+722515,Snack and Nonalcoholic Beverage Bars,Food Service,false
+722310,Food Service Contractors,Food Service,false
+722320,Caterers,Food Service,false
+722330,Mobile Food Services,Food Service,false
+722410,Drinking Places (Alcoholic Beverages),Food Service,false
+721110,Hotels (except Casino Hotels) and Motels,Food Service,false
+721120,Casino Hotels,Food Service,false
+721191,Bed-and-Breakfast Inns,Food Service,false
+721199,All Other Traveler Accommodation,Food Service,false
+721211,RV (Recreational Vehicle) Parks and Campgrounds,Food Service,true
+721214,Recreation and Vacation Camps (except Campgrounds),Food Service,true
+721310,"Rooming and Boarding Houses, Dormitories, and Workers' Camps",Food Service,false
+311811,Retail Bakeries,Food Service,false
+445291,Baked Goods Stores,Food Service,false
+445292,Confectionery and Nut Stores,Food Service,false
+445299,All Other Specialty Food Stores,Food Service,false
+445230,Fruit and Vegetable Markets,Food Service,false
+445240,Meat Markets,Food Service,false
+445250,Fish and Seafood Markets,Food Service,false
+424410,General Line Grocery Merchant Wholesalers,Food Service,false
+424420,Packaged Frozen Food Merchant Wholesalers,Food Service,false
+424490,Other Grocery and Related Products Merchant Wholesalers,Food Service,false
+541110,Offices of Lawyers,Professional Services,false
+541191,Title Abstract and Settlement Offices,Professional Services,false
+541199,All Other Legal Services,Professional Services,false
+541211,Offices of Certified Public Accountants,Professional Services,false
+541213,Tax Preparation Services,Professional Services,false
+541214,Payroll Services,Professional Services,false
+541219,Other Accounting Services,Professional Services,false
+541310,Architectural Services,Professional Services,false
+541320,Landscape Architectural Services,Professional Services,false
+541330,Engineering Services,Professional Services,false
+541340,Drafting Services,Professional Services,false
+541350,Building Inspection Services,Professional Services,false
+541370,Surveying and Mapping (except Geophysical) Services,Professional Services,false
+541380,Testing Laboratories,Professional Services,false
+541410,Interior Design Services,Professional Services,false
+541430,Graphic Design Services,Professional Services,false
+541490,Other Specialized Design Services,Professional Services,false
+541511,Custom Computer Programming Services,Professional Services,false
+541512,Computer Systems Design Services,Professional Services,false
+541513,Computer Facilities Management Services,Professional Services,false
+541519,Other Computer Related Services,Professional Services,false
+541611,Administrative Management and General Management Consulting Services,Professional Services,false
+541612,Human Resources Consulting Services,Professional Services,false
+541613,Marketing Consulting Services,Professional Services,false
+541614,"Process, Physical Distribution, and Logistics Consulting Services",Professional Services,false
+541618,Other Management Consulting Services,Professional Services,false
+541620,Environmental Consulting Services,Professional Services,false
+541690,Other Scientific and Technical Consulting Services,Professional Services,false
+541921,"Photography Studios, Portrait",Professional Services,false
+541990,"All Other Professional, Scientific, and Technical Services",Professional Services,false
+441110,New Car Dealers,Retail,false
+441120,Used Car Dealers,Retail,false
+441210,Recreational Vehicle Dealers,Retail,false
+441222,Boat Dealers,Retail,false
+441310,Automotive Parts and Accessories Stores,Retail,false
+442110,Furniture Stores,Retail,false
+442291,Window Treatment Stores,Retail,false
+443141,Household Appliance Stores,Retail,false
+445110,Supermarkets and Other Grocery (except Convenience) Stores,Retail,false
+445120,Convenience Stores,Retail,false
+448310,Jewelry Stores,Retail,false
+451110,Sporting Goods Stores,Retail,false
+452319,All Other General Merchandise Stores,Retail,false
+453110,Florists,Retail,false
+453910,Pet and Pet Supplies Stores,Retail,false
+453998,All Other Miscellaneous Store Retailers (except Tobacco Stores),Retail,false
+446110,Pharmacies and Drug Stores,Retail,false
+446120,"Cosmetics, Beauty Supplies, and Perfume Stores",Retail,false
+447110,Gasoline Stations with Convenience Stores,Retail,false
+448140,Family Clothing Stores,Retail,false
+811111,General Automotive Repair,Auto Services,false
+811114,Specialized Automotive Repair,Auto Services,false
+811121,"Automotive Body, Paint, and Interior Repair and Maintenance",Auto Services,false
+811122,Automotive Glass Replacement Shops,Auto Services,false
+811191,Automotive Oil Change and Lubrication Shops,Auto Services,false
+811192,Car Washes,Auto Services,true
+811198,All Other Automotive Repair and Maintenance,Auto Services,false
+811310,Commercial and Industrial Machinery and Equipment (except Automotive and Electronic) Repair and Maintenance,Auto Services,false
+811411,Home and Garden Equipment Repair and Maintenance,Auto Services,false
+811412,Appliance Repair and Maintenance,Auto Services,false
+811420,Reupholstery and Furniture Repair,Auto Services,false
+532111,Passenger Car Rental,Auto Services,false
+532120,"Truck, Utility Trailer, and RV (Recreational Vehicle) Rental and Leasing",Auto Services,false
+441228,"Motorcycle, ATV, and All Other Motor Vehicle Dealers",Auto Services,false
+423120,Motor Vehicle Supplies and New Parts Merchant Wholesalers,Auto Services,false
+531110,Lessors of Residential Buildings and Dwellings,Real Estate,false
+531120,Lessors of Nonresidential Buildings (except Miniwarehouses),Real Estate,false
+531130,Lessors of Miniwarehouses and Self-Storage Units,Real Estate,false
+531190,Lessors of Other Real Estate Property,Real Estate,false
+531210,Offices of Real Estate Agents and Brokers,Real Estate,false
+531311,Residential Property Managers,Real Estate,false
+531312,Nonresidential Property Managers,Real Estate,false
+531320,Offices of Real Estate Appraisers,Real Estate,false
+531390,Other Activities Related to Real Estate,Real Estate,false
+523930,Investment Advice,Real Estate,false
+713910,Golf Courses and Country Clubs,Fitness,true
+713920,Skiing Facilities,Fitness,true
+713930,Marinas,Fitness,true
+713940,Fitness and Recreational Sports Centers,Fitness,false
+713950,Bowling Centers,Fitness,false
+713990,All Other Amusement and Recreation Industries,Fitness,false
+713110,Amusement and Theme Parks,Fitness,true
+713120,Amusement Arcades,Fitness,false
+611620,Sports and Recreation Instruction,Fitness,false
+711219,Other Spectator Sports,Fitness,true
+561622,Locksmiths,Misc,false
+561440,Collection Agencies,Misc,false
+561510,Travel Agencies,Misc,false
+524210,Insurance Agencies and Brokerages,Misc,false
+524298,All Other Insurance Related Activities,Misc,false
+561311,Employment Placement Agencies,Misc,false
+561312,Executive Search Services,Misc,false
+561320,Temporary Help Services,Misc,false
