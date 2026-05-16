@@ -352,6 +352,7 @@ export type Database = {
           last_called_at: string | null
           latitude: number | null
           longitude: number | null
+          notes: string | null
           niche_id: string | null
           owner_email: string | null
           owner_email_source: string | null
@@ -401,6 +402,7 @@ export type Database = {
           last_called_at?: string | null
           latitude?: number | null
           longitude?: number | null
+          notes?: string | null
           niche_id?: string | null
           owner_email?: string | null
           owner_email_source?: string | null
@@ -450,6 +452,7 @@ export type Database = {
           last_called_at?: string | null
           latitude?: number | null
           longitude?: number | null
+          notes?: string | null
           niche_id?: string | null
           owner_email?: string | null
           owner_email_source?: string | null
