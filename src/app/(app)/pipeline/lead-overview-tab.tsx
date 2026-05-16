@@ -51,7 +51,13 @@ function HoursGrid({ hours, timezone }: { hours: WeeklyHours; timezone: string }
   );
 }
 
-export function LeadOverviewTab({ lead }: { lead: LeadDetail }) {
+export function LeadOverviewTab({
+  lead,
+  notesFieldId,
+}: {
+  lead: LeadDetail;
+  notesFieldId?: string;
+}) {
   const [notes, setNotes] = useState(lead.notes ?? '');
   const [expanded, setExpanded] = useState(false);
   const hours = parseWeeklyHours(lead.business_hours);
@@ -165,7 +171,12 @@ export function LeadOverviewTab({ lead }: { lead: LeadDetail }) {
 
       <section className="space-y-2">
         <h3 className="font-semibold">Quick notes</h3>
-        <Textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={4} />
+        <Textarea
+          id={notesFieldId}
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          rows={4}
+        />
         <p className="text-xs text-muted-foreground">Autosaves after you stop typing.</p>
         {!expanded && notes.length > 200 && (
           <button type="button" className="text-xs text-primary underline" onClick={() => setExpanded(true)}>
