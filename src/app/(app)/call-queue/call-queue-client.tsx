@@ -7,6 +7,7 @@ import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { fetchLeadById } from '@/app/(app)/pipeline/actions-fetch';
 import { formatForTelLink } from '@/lib/phone';
+import { recordOpenerUseOnCall } from '@/lib/opener/record-use';
 import { getQueueLeads, markLeadDeadInQueue } from '@/lib/queue/state';
 import type { QueueFilter, QueueLeadRow } from '@/lib/queue/types';
 import { useCallQueueKeyboard } from '@/hooks/use-call-queue-keyboard';
@@ -43,6 +44,10 @@ export function CallQueueClient({
   const [queueFilter, setQueueFilter] = useState<QueueFilter>(initialFilter);
   const [outcomeOpen, setOutcomeOpen] = useState(false);
   const [callStartedAt, setCallStartedAt] = useState<string | null>(null);
+  const [activeOpenerVariantId, setActiveOpenerVariantId] = useState<string | null>(
+    null,
+  );
+  const [openerRefreshKey, setOpenerRefreshKey] = useState(0);
   const [helpOpen, setHelpOpen] = useState(false);
 
   const queueIndex = parseIndex(
@@ -97,12 +102,16 @@ export function CallQueueClient({
     }
     window.location.href = formatForTelLink(full.business_phone);
     setCallStartedAt(new Date().toISOString());
+    const { openerVariantId } = await recordOpenerUseOnCall(currentLead.id);
+    setActiveOpenerVariantId(openerVariantId);
+    setOpenerRefreshKey((k) => k + 1);
     setOutcomeOpen(true);
   }, [currentLead]);
 
   const onOutcomeSaved = useCallback(() => {
     setOutcomeOpen(false);
     setCallStartedAt(null);
+    setActiveOpenerVariantId(null);
     startTransition(async () => {
       const result = await refreshQueue(queueFilter);
       const nextIdx = Math.min(queueIndex + 1, result.leads.length);
@@ -187,6 +196,7 @@ export function CallQueueClient({
         onCall={() => void triggerCall()}
         onPrev={goPrev}
         onNext={goNext}
+        openerRefreshKey={openerRefreshKey}
       />
 
       <OutcomeModal
@@ -194,6 +204,7 @@ export function CallQueueClient({
         leadId={currentLead?.id ?? null}
         businessName={currentBusinessName}
         calledAt={callStartedAt}
+        openerVariantId={activeOpenerVariantId}
         onSaved={onOutcomeSaved}
       />
 

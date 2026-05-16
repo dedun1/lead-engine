@@ -77,30 +77,43 @@ export async function toggleFavorited(nicheId: string): Promise<ActionResult> {
   }
 }
 
+export type TogglePitchingResult =
+  | { ok: true; startedBaselineGeneration?: boolean }
+  | { ok: false; error: string };
+
 export async function toggleActivelyPitching(
   nicheId: string,
-): Promise<ActionResult> {
+): Promise<TogglePitchingResult> {
   try {
     await requireAdmin();
     const supabase = createClient();
     const { data: row, error: readErr } = await supabase
       .from('niches')
-      .select('is_actively_pitching')
+      .select('is_actively_pitching, country_scope')
       .eq('id', nicheId)
       .single();
     if (readErr || !row) return { ok: false, error: 'Niche not found' };
 
+    const turningOn = !row.is_actively_pitching;
     const { error } = await supabase
       .from('niches')
       .update({
-        is_actively_pitching: !row.is_actively_pitching,
+        is_actively_pitching: turningOn,
         updated_at: new Date().toISOString(),
       })
       .eq('id', nicheId);
     if (error) return { ok: false, error: error.message };
 
+    if (turningOn) {
+      const country = row.country_scope?.[0] ?? 'US';
+      const { triggerBaselineGenerationIfNeeded } = await import(
+        '@/lib/opener/actions'
+      );
+      void triggerBaselineGenerationIfNeeded(nicheId, country);
+    }
+
     revalidatePath('/niches');
-    return { ok: true };
+    return { ok: true, startedBaselineGeneration: turningOn };
   } catch (error) {
     const message =
       error instanceof Error ? error.message : 'Failed to update pitching flag';

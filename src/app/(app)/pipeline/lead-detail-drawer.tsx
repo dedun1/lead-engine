@@ -15,6 +15,7 @@ import { LeadStatusChanger } from './lead-status-changer';
 import { LeadDrawerHeader } from './lead-drawer-header';
 import { fetchLeadById } from './actions-fetch';
 import { OutcomeModal } from '@/app/(app)/call-queue/outcome-modal';
+import { recordOpenerUseOnCall } from '@/lib/opener/record-use';
 import { assignLead, queueLead, updateLeadStatus } from './actions-mutations';
 
 type TeamMember = { id: string; display_name: string | null; email: string };
@@ -43,6 +44,9 @@ export function LeadDetailDrawer({
   const [dirty, setDirty] = useState(false);
   const [outcomeOpen, setOutcomeOpen] = useState(false);
   const [callStartedAt, setCallStartedAt] = useState<string | null>(null);
+  const [activeOpenerVariantId, setActiveOpenerVariantId] = useState<string | null>(
+    null,
+  );
 
   const load = useCallback(async () => {
     if (!leadId) return;
@@ -95,7 +99,10 @@ export function LeadDetailDrawer({
                 }
                 window.location.href = formatForTelLink(lead.business_phone);
                 setCallStartedAt(new Date().toISOString());
-                setOutcomeOpen(true);
+                void recordOpenerUseOnCall(lead.id).then(({ openerVariantId }) => {
+                  setActiveOpenerVariantId(openerVariantId);
+                  setOutcomeOpen(true);
+                });
               }}
               onQueue={() => void queueLead(lead.id).then(() => {
                 toast.success('Queued');
@@ -115,7 +122,7 @@ export function LeadDetailDrawer({
                   <LeadOverviewTab lead={lead} />
                 </TabsContent>
                 <TabsContent value="intelligence" className="mt-0">
-                  <LeadIntelligenceTab lead={lead} />
+                  <LeadIntelligenceTab lead={lead} isAdmin={isAdmin} />
                 </TabsContent>
                 <TabsContent value="activity" className="mt-0">
                   <LeadActivityTab lead={lead} />
@@ -181,9 +188,11 @@ export function LeadDetailDrawer({
       leadId={lead?.id ?? null}
       businessName={lead?.business_name ?? null}
       calledAt={callStartedAt}
+      openerVariantId={activeOpenerVariantId}
       onSaved={() => {
         setOutcomeOpen(false);
         setCallStartedAt(null);
+        setActiveOpenerVariantId(null);
         void load();
         onRefresh();
       }}

@@ -353,6 +353,7 @@ export type Database = {
           city: string | null
           country: string | null
           created_at: string | null
+          current_opener_variant_id: string | null
           employee_count_estimate: number | null
           employee_count_source: string | null
           fingerprint: string
@@ -404,6 +405,7 @@ export type Database = {
           city?: string | null
           country?: string | null
           created_at?: string | null
+          current_opener_variant_id?: string | null
           employee_count_estimate?: number | null
           employee_count_source?: string | null
           fingerprint: string
@@ -455,6 +457,7 @@ export type Database = {
           city?: string | null
           country?: string | null
           created_at?: string | null
+          current_opener_variant_id?: string | null
           employee_count_estimate?: number | null
           employee_count_source?: string | null
           fingerprint?: string
@@ -752,14 +755,18 @@ export type Database = {
           country: string | null
           created_at: string | null
           created_by_id: string | null
+          hook_type: string | null
           id: string
           is_active: boolean | null
+          is_edited: boolean | null
           is_personalized: boolean | null
           lead_id: string | null
           meetings_set: number | null
           name: string | null
           niche_id: string | null
           opener_text: string
+          personalization_signals_used: Json | null
+          predicted_open_rate: number | null
           times_used: number | null
           updated_at: string | null
         }
@@ -768,14 +775,18 @@ export type Database = {
           country?: string | null
           created_at?: string | null
           created_by_id?: string | null
+          hook_type?: string | null
           id?: string
           is_active?: boolean | null
+          is_edited?: boolean | null
           is_personalized?: boolean | null
           lead_id?: string | null
           meetings_set?: number | null
           name?: string | null
           niche_id?: string | null
           opener_text: string
+          personalization_signals_used?: Json | null
+          predicted_open_rate?: number | null
           times_used?: number | null
           updated_at?: string | null
         }
@@ -784,14 +795,18 @@ export type Database = {
           country?: string | null
           created_at?: string | null
           created_by_id?: string | null
+          hook_type?: string | null
           id?: string
           is_active?: boolean | null
+          is_edited?: boolean | null
           is_personalized?: boolean | null
           lead_id?: string | null
           meetings_set?: number | null
           name?: string | null
           niche_id?: string | null
           opener_text?: string
+          personalization_signals_used?: Json | null
+          predicted_open_rate?: number | null
           times_used?: number | null
           updated_at?: string | null
         }

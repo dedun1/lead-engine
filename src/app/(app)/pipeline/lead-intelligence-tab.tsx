@@ -1,9 +1,15 @@
 'use client';
 
 import Link from 'next/link';
+import { LeadOpenerPanel } from '@/components/opener/lead-opener-panel';
 import type { LeadDetail } from '@/lib/pipeline/types';
 
-export function LeadIntelligenceTab({ lead }: { lead: LeadDetail }) {
+type Props = {
+  lead: LeadDetail;
+  isAdmin: boolean;
+};
+
+export function LeadIntelligenceTab({ lead, isAdmin }: Props) {
   const intel = lead.niche_intelligence;
   const nicheName = lead.niche?.name ?? 'this niche';
 
@@ -19,7 +25,7 @@ export function LeadIntelligenceTab({ lead }: { lead: LeadDetail }) {
   }
 
   return (
-    <div className="space-y-4 text-sm">
+    <div className="space-y-6 text-sm">
       <div className="rounded-lg border p-4 space-y-2">
         <p className="font-medium">Niche intelligence (read-only)</p>
         <p>{intel.summary}</p>
@@ -41,12 +47,13 @@ export function LeadIntelligenceTab({ lead }: { lead: LeadDetail }) {
           </>
         ) : null}
       </div>
-      <div className="rounded-lg border border-dashed p-4 text-muted-foreground">
-        <p className="font-medium text-foreground">Pitch hooks for this lead</p>
-        <p className="mt-1 text-xs">
-          Personalized opener coming in BUILD Prompt 14
-        </p>
-      </div>
+
+      <LeadOpenerPanel
+        leadId={lead.id}
+        isAdmin={isAdmin}
+        hasIntelligence
+        nicheId={lead.niche_id}
+      />
     </div>
   );
 }

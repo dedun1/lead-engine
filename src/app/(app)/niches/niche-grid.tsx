@@ -64,6 +64,11 @@ export function NicheGrid({
       toast.error(result.error);
       return;
     }
+    if (result.startedBaselineGeneration) {
+      toast.message(
+        'Marked as actively pitching. Generating baseline openers in background…',
+      );
+    }
     void load();
     setSelected({
       ...selected,

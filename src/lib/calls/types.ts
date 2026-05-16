@@ -56,4 +56,5 @@ export type SaveCallOutcomeInput = {
   tags: string[];
   sentimentScore: number | null;
   nextContactDate: string | null;
+  openerVariantId: string | null;
 };

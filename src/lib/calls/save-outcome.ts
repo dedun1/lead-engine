@@ -7,6 +7,7 @@ import { logActivity } from '@/lib/activity/log';
 import { addToBlocklist } from '@/lib/dedup/blocklist';
 import { getAuthUser } from '@/lib/permissions';
 import type { LeadStatus } from '@/lib/pipeline/types';
+import { incrementOpenerMeetingIfBooked } from '@/lib/opener/apply-meeting-from-call';
 import type { SaveCallOutcomeInput } from './types';
 
 export type SaveOutcomeResult = { ok: true } | { ok: false; error: string };
@@ -84,6 +85,7 @@ export async function saveCallOutcome(
       tags: input.tags,
       sentiment_score: input.sentimentScore,
       next_contact_date: input.nextContactDate,
+      opener_variant_id: input.openerVariantId,
       prospect_local_hour: local.hour,
       prospect_local_day: local.weekday % 7,
     });
@@ -126,6 +128,11 @@ export async function saveCallOutcome(
         tags: input.tags,
       },
     });
+
+    await incrementOpenerMeetingIfBooked(
+      input.openerVariantId,
+      input.subOutcome,
+    );
 
     if (input.subOutcome === 'dnc_requested') {
       await logActivity({

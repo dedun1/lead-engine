@@ -10,6 +10,7 @@ import type { LeadDetail } from '@/lib/pipeline/types';
 import { fetchLeadById } from '@/app/(app)/pipeline/actions-fetch';
 import { LeadOverviewTab } from '@/app/(app)/pipeline/lead-overview-tab';
 import { LeadIntelligenceTab } from '@/app/(app)/pipeline/lead-intelligence-tab';
+import { LeadOpenerPanel } from '@/components/opener/lead-opener-panel';
 import { LeadActivityTab } from '@/app/(app)/pipeline/lead-activity-tab';
 import { LeadRawTab } from '@/app/(app)/pipeline/lead-raw-tab';
 
@@ -23,6 +24,7 @@ type Props = {
   onCall: () => void;
   onPrev: () => void;
   onNext: () => void;
+  openerRefreshKey?: number;
 };
 
 export function CallQueueMain({
@@ -33,6 +35,7 @@ export function CallQueueMain({
   onCall,
   onPrev,
   onNext,
+  openerRefreshKey,
 }: Props) {
   const [lead, setLead] = useState<LeadDetail | null>(null);
   const [loading, setLoading] = useState(false);
@@ -120,6 +123,18 @@ export function CallQueueMain({
         ) : (
           <p className="mt-4 text-lg text-muted-foreground">No phone on file</p>
         )}
+        {lead.niche_intelligence && (
+          <div className="mt-6 max-w-2xl">
+            <LeadOpenerPanel
+              leadId={lead.id}
+              isAdmin={isAdmin}
+              hasIntelligence
+              nicheId={lead.niche_id}
+              compact
+              refreshKey={openerRefreshKey}
+            />
+          </div>
+        )}
       </div>
 
       <Tabs defaultValue="overview" className="flex min-h-0 flex-1 flex-col">
@@ -134,7 +149,7 @@ export function CallQueueMain({
             <LeadOverviewTab lead={lead} notesFieldId={NOTES_FIELD_ID} />
           </TabsContent>
           <TabsContent value="intelligence" className="mt-0">
-            <LeadIntelligenceTab lead={lead} />
+            <LeadIntelligenceTab lead={lead} isAdmin={isAdmin} />
           </TabsContent>
           <TabsContent value="activity" className="mt-0">
             <LeadActivityTab lead={lead} />

@@ -32,6 +32,7 @@ type Props = {
   leadId: string | null;
   businessName: string | null;
   calledAt: string | null;
+  openerVariantId: string | null;
   onSaved: () => void;
 };
 
@@ -73,6 +74,7 @@ export function OutcomeModal({
   leadId,
   businessName,
   calledAt,
+  openerVariantId,
   onSaved,
 }: Props) {
   const [step, setStep] = useState<OutcomeModalStep>('outcome');
@@ -174,6 +176,7 @@ export function OutcomeModal({
       tags: buildTags(selectedTags, competitorName),
       sentimentScore: sentimentTouched ? sentiment : null,
       nextContactDate: nextContact,
+      openerVariantId,
     });
 
     setSaving(false);
