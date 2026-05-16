@@ -119,7 +119,14 @@ export function LeadDetailDrawer({
               </TabsList>
               <div className="min-h-0 flex-1 overflow-y-auto px-6 py-4">
                 <TabsContent value="overview" className="mt-0">
-                  <LeadOverviewTab lead={lead} />
+                  <LeadOverviewTab
+                    lead={lead}
+                    isAdmin={isAdmin}
+                    onRefresh={() => {
+                      void load();
+                      onRefresh();
+                    }}
+                  />
                 </TabsContent>
                 <TabsContent value="intelligence" className="mt-0">
                   <LeadIntelligenceTab lead={lead} isAdmin={isAdmin} />

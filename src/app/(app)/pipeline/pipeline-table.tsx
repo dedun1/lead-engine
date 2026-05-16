@@ -1,7 +1,7 @@
 'use client';
 
 import { formatDistanceToNow } from 'date-fns';
-import { Star } from 'lucide-react';
+import { Check, Mail, Star } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   Table,
@@ -88,6 +88,8 @@ export function PipelineTable({
             <SortHead label="Status" col="status" sort={sort} sortDir={sortDir} onSort={onSort} />
           </TableHead>
           <TableHead>Phone</TableHead>
+          <TableHead>Owner</TableHead>
+          <TableHead>Enriched</TableHead>
           <TableHead>Location</TableHead>
           <TableHead>
             <SortHead label="Rating" col="rating" sort={sort} sortDir={sortDir} onSort={onSort} />
@@ -140,6 +142,30 @@ export function PipelineTable({
                   >
                     {formatForDisplay(lead.business_phone)}
                   </a>
+                ) : (
+                  '—'
+                )}
+              </TableCell>
+              <TableCell className="text-sm">
+                {lead.owner_name ? (
+                  <span className="flex items-center gap-1">
+                    {lead.owner_name}
+                    {lead.owner_email_status === 'verified' && (
+                      <Mail className="h-3 w-3 text-green-600" aria-label="Email verified" />
+                    )}
+                  </span>
+                ) : (
+                  '—'
+                )}
+              </TableCell>
+              <TableCell className="text-xs text-muted-foreground">
+                {lead.enriched_at ? (
+                  <span className="flex items-center gap-1">
+                    {(lead.owner_name || lead.owner_email) && (
+                      <Check className="h-3 w-3 text-green-600" />
+                    )}
+                    {formatDistanceToNow(new Date(lead.enriched_at), { addSuffix: true })}
+                  </span>
                 ) : (
                   '—'
                 )}

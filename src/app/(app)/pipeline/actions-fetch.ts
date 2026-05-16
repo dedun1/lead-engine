@@ -53,7 +53,8 @@ export async function fetchLeads(
   let dataQuery = supabase.from('leads').select(
     `id, business_name, status, business_phone, city, region, country,
      google_rating, google_review_count, business_hours, timezone,
-     assigned_to, created_at, niche_id,
+     assigned_to, created_at, niche_id, owner_name, owner_email,
+     owner_email_status, enriched_at,
      niches ( name ),
      assignee:team_members!leads_assigned_to_fkey ( display_name )`,
   );
@@ -134,6 +135,10 @@ export async function fetchLeads(
       created_at: row.created_at!,
       niche_id: row.niche_id,
       niche_name: niche?.name ?? null,
+      owner_name: row.owner_name,
+      owner_email: row.owner_email,
+      owner_email_status: row.owner_email_status,
+      enriched_at: row.enriched_at,
     };
   });
 

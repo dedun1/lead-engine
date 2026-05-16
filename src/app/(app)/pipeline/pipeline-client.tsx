@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from 'react';
 import Link from 'next/link';
+import { toast } from 'sonner';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { PipelineToolbar } from './pipeline-toolbar';
@@ -88,6 +89,35 @@ export function PipelineClient({
     void fetchLeads(next).then(setData);
   };
 
+  const bulkEnrich = async () => {
+    const ids = [...selected];
+    if (!ids.length) return;
+    const toastId = toast.loading(`Enriching ${ids.length} leads…`);
+    try {
+      const res = await fetch('/api/enrich/bulk', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ lead_ids: ids }),
+      });
+      const data = (await res.json()) as {
+        error?: string;
+        completed?: number;
+        total?: number;
+      };
+      if (!res.ok) {
+        toast.error(data.error ?? 'Bulk enrich failed', { id: toastId });
+        return;
+      }
+      toast.success(
+        `Enriched ${data.completed ?? 0} of ${data.total ?? ids.length} leads`,
+        { id: toastId },
+      );
+      void reload();
+    } catch {
+      toast.error('Bulk enrich failed', { id: toastId });
+    }
+  };
+
   if (data.totalCount === 0 && !loading) {
     return (
       <div className="flex flex-col items-center justify-center rounded-xl border bg-card px-8 py-16 text-center">
@@ -119,6 +149,7 @@ export function PipelineClient({
         onRefresh={() => void reload()}
         onViewTable={() => setView('table')}
         onViewCards={() => setView('cards')}
+        onBulkEnrich={() => void bulkEnrich()}
       />
 
       <div className="mt-4 rounded-lg border">

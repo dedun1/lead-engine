@@ -52,6 +52,10 @@ export type PipelineLeadRow = {
   created_at: string;
   niche_id: string | null;
   niche_name: string | null;
+  owner_name: string | null;
+  owner_email: string | null;
+  owner_email_status: string | null;
+  enriched_at: string | null;
 };
 
 export type LeadDetail = Database['public']['Tables']['leads']['Row'] & {

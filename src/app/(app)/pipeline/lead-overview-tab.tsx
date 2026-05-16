@@ -14,6 +14,8 @@ import {
   parseWeeklyHours,
 } from '@/lib/pipeline/lead-utils';
 import { getHoursDot, HOURS_DOT_CLASS } from '@/lib/pipeline/hours-indicator';
+import { EnrichButton } from '@/components/pipeline/enrich-button';
+import { EnrichmentDisplay } from '@/components/pipeline/enrichment-display';
 import { updateLeadNotes } from './actions-mutations';
 
 const DAYS = [
@@ -54,9 +56,13 @@ function HoursGrid({ hours, timezone }: { hours: WeeklyHours; timezone: string }
 export function LeadOverviewTab({
   lead,
   notesFieldId,
+  isAdmin,
+  onRefresh,
 }: {
   lead: LeadDetail;
   notesFieldId?: string;
+  isAdmin?: boolean;
+  onRefresh?: () => void;
 }) {
   const [notes, setNotes] = useState(lead.notes ?? '');
   const [expanded, setExpanded] = useState(false);
@@ -99,12 +105,12 @@ export function LeadOverviewTab({
         ) : (
           <p className="text-muted-foreground">No business phone</p>
         )}
-        <p className="text-muted-foreground text-xs">
-          Owner mobile via Lusha — coming in BUILD Prompt 11
-        </p>
-        <p className="text-muted-foreground text-xs">
-          Email enrichment — coming in BUILD Prompt 11
-        </p>
+        <EnrichmentDisplay lead={lead} isAdmin={isAdmin ?? false} />
+        <EnrichButton
+          leadId={lead.id}
+          enrichedAt={lead.enriched_at ?? null}
+          onDone={() => onRefresh?.()}
+        />
         {lead.website && (
           <p>
             <a

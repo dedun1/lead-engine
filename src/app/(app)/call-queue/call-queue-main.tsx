@@ -146,7 +146,12 @@ export function CallQueueMain({
         </TabsList>
         <div className="min-h-0 flex-1 overflow-y-auto px-8 py-4">
           <TabsContent value="overview" className="mt-0">
-            <LeadOverviewTab lead={lead} notesFieldId={NOTES_FIELD_ID} />
+            <LeadOverviewTab
+              lead={lead}
+              notesFieldId={NOTES_FIELD_ID}
+              isAdmin={isAdmin}
+              onRefresh={() => void load()}
+            />
           </TabsContent>
           <TabsContent value="intelligence" className="mt-0">
             <LeadIntelligenceTab lead={lead} isAdmin={isAdmin} />

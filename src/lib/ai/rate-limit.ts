@@ -1,9 +1,11 @@
 const WINDOW_MS = 5 * 60 * 1000;
 const MAX_NICHE_CARD = 10;
 const MAX_OPENER = 20;
+const MAX_ENRICH = 20;
 
 const nicheCardBuckets = new Map<string, number[]>();
 const openerBuckets = new Map<string, number[]>();
+const enrichBuckets = new Map<string, number[]>();
 
 function allowInBucket(
   buckets: Map<string, number[]>,
@@ -42,4 +44,12 @@ export function allowOpenerGeneration(userId: string): boolean {
 
 export function openerRetryAfterSeconds(userId: string): number {
   return retryForBucket(openerBuckets, userId, MAX_OPENER);
+}
+
+export function allowEnrichment(userId: string): boolean {
+  return allowInBucket(enrichBuckets, userId, MAX_ENRICH);
+}
+
+export function enrichRetryAfterSeconds(userId: string): number {
+  return retryForBucket(enrichBuckets, userId, MAX_ENRICH);
 }

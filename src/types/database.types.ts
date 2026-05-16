@@ -370,6 +370,10 @@ export type Database = {
           niche_id: string | null
           owner_email: string | null
           owner_email_source: string | null
+          owner_email_status: string | null
+          owner_linkedin_url: string | null
+          business_registration: Json | null
+          enriched_at: string | null
           owner_name: string | null
           owner_phone: string | null
           owner_phone_confidence: string | null
@@ -422,6 +426,10 @@ export type Database = {
           niche_id?: string | null
           owner_email?: string | null
           owner_email_source?: string | null
+          owner_email_status?: string | null
+          owner_linkedin_url?: string | null
+          business_registration?: Json | null
+          enriched_at?: string | null
           owner_name?: string | null
           owner_phone?: string | null
           owner_phone_confidence?: string | null
@@ -474,6 +482,10 @@ export type Database = {
           niche_id?: string | null
           owner_email?: string | null
           owner_email_source?: string | null
+          owner_email_status?: string | null
+          owner_linkedin_url?: string | null
+          business_registration?: Json | null
+          enriched_at?: string | null
           owner_name?: string | null
           owner_phone?: string | null
           owner_phone_confidence?: string | null

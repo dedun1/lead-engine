@@ -18,6 +18,7 @@ export function PipelineToolbar({
   onRefresh,
   onViewTable,
   onViewCards,
+  onBulkEnrich,
 }: {
   shown: number;
   total: number;
@@ -27,6 +28,7 @@ export function PipelineToolbar({
   onRefresh: () => void;
   onViewTable: () => void;
   onViewCards: () => void;
+  onBulkEnrich: () => void;
 }) {
   return (
     <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
@@ -59,8 +61,13 @@ export function PipelineToolbar({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
+            <DropdownMenuItem
+              disabled={selectedCount === 0}
+              onClick={onBulkEnrich}
+            >
+              Enrich selected
+            </DropdownMenuItem>
             <DropdownMenuItem disabled>Assign — coming soon</DropdownMenuItem>
-            <DropdownMenuItem disabled>Export CSV — coming soon</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
