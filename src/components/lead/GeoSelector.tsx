@@ -1,7 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { COUNTRIES, getRegionsByCountry, type CountryCode } from '@/lib/geo';
+import { useEffect, useMemo, useState } from 'react';
+import {
+  COUNTRIES,
+  getCitiesByRegion,
+  getRegionsByCountry,
+  type CountryCode,
+} from '@/lib/geo';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import {
@@ -11,6 +16,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { CityCombobox } from './CityCombobox';
 
 export type GeoSelection = {
   country: CountryCode;
@@ -31,6 +38,10 @@ export function GeoSelector({ value, onChange }: Props) {
   const [postal, setPostal] = useState(value?.postal ?? '');
 
   const regions = getRegionsByCountry(country);
+  const cities = useMemo(
+    () => (region ? getCitiesByRegion(country, region) : []),
+    [country, region],
+  );
 
   useEffect(() => {
     if (!region && regions[0]) setRegion(regions[0].code);
@@ -61,7 +72,7 @@ export function GeoSelector({ value, onChange }: Props) {
           <SelectTrigger>
             <SelectValue placeholder="Country" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="max-h-[400px]">
             {COUNTRIES.map((c) => (
               <SelectItem key={c.code} value={c.code}>
                 {c.name}
@@ -82,23 +93,25 @@ export function GeoSelector({ value, onChange }: Props) {
           <SelectTrigger>
             <SelectValue placeholder="State / province" />
           </SelectTrigger>
-          <SelectContent>
-            {regions.map((r) => (
-              <SelectItem key={r.code} value={r.code}>
-                {r.name}
-              </SelectItem>
-            ))}
+          <SelectContent className="max-h-[400px] p-0">
+            <ScrollArea className="h-[400px]">
+              <div className="p-1">
+                {regions.map((r) => (
+                  <SelectItem key={r.code} value={r.code}>
+                    {r.name}
+                  </SelectItem>
+                ))}
+              </div>
+            </ScrollArea>
           </SelectContent>
         </Select>
       </div>
-      <div className="space-y-2">
-        <Label>City</Label>
-        <Input
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-          placeholder="Houston"
-        />
-      </div>
+      <CityCombobox
+        cities={cities}
+        value={city}
+        onChange={setCity}
+        disabled={!region}
+      />
       <div className="space-y-2">
         <Label>Postal code (optional)</Label>
         <Input
