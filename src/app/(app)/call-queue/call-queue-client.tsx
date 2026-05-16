@@ -12,7 +12,7 @@ import type { QueueFilter, QueueLeadRow } from '@/lib/queue/types';
 import { useCallQueueKeyboard } from '@/hooks/use-call-queue-keyboard';
 import { CallQueueRail } from './call-queue-rail';
 import { CallQueueMain, NOTES_FIELD_ID } from './call-queue-main';
-import { OutcomeModalStub } from './outcome-modal-stub';
+import { OutcomeModal } from './outcome-modal';
 import { ShortcutHelpDialog } from './shortcut-help-dialog';
 
 type Props = {
@@ -42,6 +42,7 @@ export function CallQueueClient({
   const [calledToday, setCalledToday] = useState(initialCalledToday);
   const [queueFilter, setQueueFilter] = useState<QueueFilter>(initialFilter);
   const [outcomeOpen, setOutcomeOpen] = useState(false);
+  const [callStartedAt, setCallStartedAt] = useState<string | null>(null);
   const [helpOpen, setHelpOpen] = useState(false);
 
   const queueIndex = parseIndex(
@@ -95,10 +96,13 @@ export function CallQueueClient({
       return;
     }
     window.location.href = formatForTelLink(full.business_phone);
+    setCallStartedAt(new Date().toISOString());
     setOutcomeOpen(true);
   }, [currentLead]);
 
   const onOutcomeSaved = useCallback(() => {
+    setOutcomeOpen(false);
+    setCallStartedAt(null);
     startTransition(async () => {
       const result = await refreshQueue(queueFilter);
       const nextIdx = Math.min(queueIndex + 1, result.leads.length);
@@ -185,11 +189,11 @@ export function CallQueueClient({
         onNext={goNext}
       />
 
-      <OutcomeModalStub
+      <OutcomeModal
         open={outcomeOpen}
         leadId={currentLead?.id ?? null}
         businessName={currentBusinessName}
-        onOpenChange={setOutcomeOpen}
+        calledAt={callStartedAt}
         onSaved={onOutcomeSaved}
       />
 

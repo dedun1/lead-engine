@@ -15,5 +15,3 @@ export type QueueLeadsResult = {
   leads: QueueLeadRow[];
   calledToday: number;
 };
-
-export type StubOutcomeChoice = 'yes' | 'no' | 'voicemail';

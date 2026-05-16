@@ -14,6 +14,7 @@ import { LeadRawTab } from './lead-raw-tab';
 import { LeadStatusChanger } from './lead-status-changer';
 import { LeadDrawerHeader } from './lead-drawer-header';
 import { fetchLeadById } from './actions-fetch';
+import { OutcomeModal } from '@/app/(app)/call-queue/outcome-modal';
 import { assignLead, queueLead, updateLeadStatus } from './actions-mutations';
 
 type TeamMember = { id: string; display_name: string | null; email: string };
@@ -40,6 +41,8 @@ export function LeadDetailDrawer({
   const [statusDraft, setStatusDraft] = useState<LeadStatus>('new');
   const [assignDraft, setAssignDraft] = useState<string | null>(null);
   const [dirty, setDirty] = useState(false);
+  const [outcomeOpen, setOutcomeOpen] = useState(false);
+  const [callStartedAt, setCallStartedAt] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     if (!leadId) return;
@@ -68,6 +71,7 @@ export function LeadDetailDrawer({
   };
 
   return (
+    <>
     <Sheet open={open} onOpenChange={(v) => !v && onClose()}>
       <SheetContent className="flex w-full flex-col p-0 sm:max-w-[560px]">
         {loading && !lead && (
@@ -90,7 +94,8 @@ export function LeadDetailDrawer({
                   return;
                 }
                 window.location.href = formatForTelLink(lead.business_phone);
-                toast.message('Outcome logging coming in BUILD Prompt 19');
+                setCallStartedAt(new Date().toISOString());
+                setOutcomeOpen(true);
               }}
               onQueue={() => void queueLead(lead.id).then(() => {
                 toast.success('Queued');
@@ -170,5 +175,19 @@ export function LeadDetailDrawer({
         )}
       </SheetContent>
     </Sheet>
+
+    <OutcomeModal
+      open={outcomeOpen}
+      leadId={lead?.id ?? null}
+      businessName={lead?.business_name ?? null}
+      calledAt={callStartedAt}
+      onSaved={() => {
+        setOutcomeOpen(false);
+        setCallStartedAt(null);
+        void load();
+        onRefresh();
+      }}
+    />
+    </>
   );
 }

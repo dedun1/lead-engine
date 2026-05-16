@@ -118,6 +118,7 @@ export type Database = {
           duration_seconds: number | null
           id: string
           lead_id: string | null
+          next_contact_date: string | null
           notes: string | null
           objection: string | null
           objection_other: string | null
@@ -126,6 +127,9 @@ export type Database = {
           prospect_local_day: number | null
           prospect_local_hour: number | null
           result: string | null
+          sentiment_score: number | null
+          sub_outcome: string | null
+          tags: Json | null
           updated_at: string | null
         }
         Insert: {
@@ -137,6 +141,7 @@ export type Database = {
           duration_seconds?: number | null
           id?: string
           lead_id?: string | null
+          next_contact_date?: string | null
           notes?: string | null
           objection?: string | null
           objection_other?: string | null
@@ -145,6 +150,9 @@ export type Database = {
           prospect_local_day?: number | null
           prospect_local_hour?: number | null
           result?: string | null
+          sentiment_score?: number | null
+          sub_outcome?: string | null
+          tags?: Json | null
           updated_at?: string | null
         }
         Update: {
@@ -156,6 +164,7 @@ export type Database = {
           duration_seconds?: number | null
           id?: string
           lead_id?: string | null
+          next_contact_date?: string | null
           notes?: string | null
           objection?: string | null
           objection_other?: string | null
@@ -164,6 +173,9 @@ export type Database = {
           prospect_local_day?: number | null
           prospect_local_hour?: number | null
           result?: string | null
+          sentiment_score?: number | null
+          sub_outcome?: string | null
+          tags?: Json | null
           updated_at?: string | null
         }
         Relationships: [
@@ -350,6 +362,7 @@ export type Database = {
           id: string
           is_blocked: boolean | null
           last_called_at: string | null
+          last_outcome: string | null
           latitude: number | null
           longitude: number | null
           notes: string | null
@@ -400,6 +413,7 @@ export type Database = {
           id?: string
           is_blocked?: boolean | null
           last_called_at?: string | null
+          last_outcome?: string | null
           latitude?: number | null
           longitude?: number | null
           notes?: string | null
@@ -450,6 +464,7 @@ export type Database = {
           id?: string
           is_blocked?: boolean | null
           last_called_at?: string | null
+          last_outcome?: string | null
           latitude?: number | null
           longitude?: number | null
           notes?: string | null

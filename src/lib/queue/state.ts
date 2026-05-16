@@ -7,12 +7,7 @@ import { logActivity } from '@/lib/activity/log';
 import { getAuthUser, getSessionContext } from '@/lib/permissions';
 import type { LeadStatus } from '@/lib/pipeline/types';
 import { sortQueueLeads } from './sort-queue';
-import type {
-  QueueFilter,
-  QueueLeadsResult,
-  QueueLeadRow,
-  StubOutcomeChoice,
-} from './types';
+import type { QueueFilter, QueueLeadsResult, QueueLeadRow } from './types';
 
 function startOfUtcDayIso(): string {
   return DateTime.utc().startOf('day').toISO()!;
@@ -63,67 +58,6 @@ export async function getQueueLeads(
   const leads = sortQueueLeads(rows, ctx.user.id);
   const calledToday = await getCalledTodayCount(ctx.user.id);
   return { leads, calledToday };
-}
-
-function stubToOutcome(choice: StubOutcomeChoice): string {
-  if (choice === 'yes') return 'answered';
-  if (choice === 'voicemail') return 'voicemail';
-  return 'no_answer';
-}
-
-export async function recordCallAttemptStub(
-  leadId: string,
-  choice: StubOutcomeChoice,
-): Promise<{ ok: true } | { ok: false; error: string }> {
-  try {
-    const actorId = await requireActorId();
-    const supabase = createClient();
-
-    const { data: lead } = await supabase
-      .from('leads')
-      .select('timezone, times_called')
-      .eq('id', leadId)
-      .single();
-    if (!lead) return { ok: false, error: 'Lead not found' };
-
-    const tz = lead.timezone ?? 'America/New_York';
-    const local = DateTime.now().setZone(tz);
-    const calledAt = new Date().toISOString();
-
-    const { error: insertErr } = await supabase.from('call_attempts').insert({
-      lead_id: leadId,
-      actor_id: actorId,
-      called_at: calledAt,
-      outcome: stubToOutcome(choice),
-      prospect_local_hour: local.hour,
-      prospect_local_day: local.weekday % 7,
-    });
-    if (insertErr) return { ok: false, error: insertErr.message };
-
-    const timesCalled = (lead.times_called ?? 0) + 1;
-    await supabase
-      .from('leads')
-      .update({
-        times_called: timesCalled,
-        last_called_at: calledAt,
-        updated_at: calledAt,
-      })
-      .eq('id', leadId);
-
-    await logActivity({
-      lead_id: leadId,
-      user_id: actorId,
-      activity_type: 'call',
-      payload: { stub: choice, outcome: stubToOutcome(choice) },
-    });
-
-    revalidatePath('/call-queue');
-    revalidatePath('/pipeline');
-    return { ok: true };
-  } catch (e) {
-    const msg = e instanceof Error ? e.message : 'Failed to log call';
-    return { ok: false, error: msg };
-  }
 }
 
 export async function markLeadDeadInQueue(
