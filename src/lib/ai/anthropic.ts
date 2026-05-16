@@ -14,6 +14,20 @@ export function assertHaikuModel(model: string): void {
   }
 }
 
+export async function hasAnthropicKey(): Promise<boolean> {
+  try {
+    const admin = createAdminClient();
+    const { data } = await admin
+      .from('api_keys')
+      .select('id')
+      .eq('service', 'anthropic')
+      .maybeSingle();
+    return Boolean(data?.id);
+  } catch {
+    return false;
+  }
+}
+
 export async function getAnthropicClient(): Promise<Anthropic> {
   const admin = createAdminClient();
   const { data, error } = await admin

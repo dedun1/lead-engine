@@ -988,26 +988,44 @@ export type Database = {
       }
       weekly_insights: {
         Row: {
+          actionable_insights: Json | null
           created_at: string | null
           dismissed_by: string[] | null
+          experiments_to_try: Json | null
+          generated_at: string | null
+          generated_by: string | null
+          headline_observation: string | null
           id: string
           insight_text: string | null
+          source_metrics: Json | null
           updated_at: string | null
           week_starting: string | null
         }
         Insert: {
+          actionable_insights?: Json | null
           created_at?: string | null
           dismissed_by?: string[] | null
+          experiments_to_try?: Json | null
+          generated_at?: string | null
+          generated_by?: string | null
+          headline_observation?: string | null
           id?: string
           insight_text?: string | null
+          source_metrics?: Json | null
           updated_at?: string | null
           week_starting?: string | null
         }
         Update: {
+          actionable_insights?: Json | null
           created_at?: string | null
           dismissed_by?: string[] | null
+          experiments_to_try?: Json | null
+          generated_at?: string | null
+          generated_by?: string | null
+          headline_observation?: string | null
           id?: string
           insight_text?: string | null
+          source_metrics?: Json | null
           updated_at?: string | null
           week_starting?: string | null
         }
