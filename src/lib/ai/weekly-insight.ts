@@ -19,7 +19,7 @@ import type { WeeklyInsightPayload } from '@/lib/dashboard/types';
 const CAIRO = 'Africa/Cairo';
 const MIN_CALLS = 10;
 
-const SYSTEM_PROMPT = `You are a cold-call performance analyst. Given last week's metrics, identify 3-5 actionable insights and 2-3 experiments to run next week.
+export const WEEKLY_INSIGHT_PROMPT_SYSTEM = `You are a cold-call performance analyst. Given last week's metrics, identify 3-5 actionable insights and 2-3 experiments to run next week.
 Respond with JSON only, no markdown. Schema:
 {
   "headline_observation": "1-2 sentences",
@@ -119,7 +119,7 @@ export async function generateWeeklyInsight(
   const userPrompt = JSON.stringify(source_metrics, null, 2);
 
   const { text } = await callHaiku({
-    systemPrompt: SYSTEM_PROMPT,
+    systemPrompt: WEEKLY_INSIGHT_PROMPT_SYSTEM,
     userPrompt,
     maxTokens: 2048,
     temperature: 0.5,

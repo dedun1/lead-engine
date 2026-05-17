@@ -9,18 +9,6 @@ import {
 
 const SECTIONS = [
   {
-    href: '/settings/api-keys',
-    label: 'API Keys',
-    desc: 'Anthropic + optional paid sources, encrypted at rest',
-    icon: Key,
-  },
-  {
-    href: '/settings/pricing',
-    label: 'Pricing Config',
-    desc: 'Per-source unit costs used by the estimator',
-    icon: DollarSign,
-  },
-  {
     href: '/settings/health',
     label: 'Source Health',
     desc: 'Scraper status — green / yellow / red',
@@ -35,8 +23,20 @@ const SECTIONS = [
   {
     href: '/settings/prompts',
     label: 'AI Prompts',
-    desc: 'Editable prompt templates (Phase 9)',
+    desc: 'Haiku prompt templates (read-only)',
     icon: MessageSquare,
+  },
+  {
+    href: '/settings/api-keys',
+    label: 'API Keys',
+    desc: 'Anthropic + optional paid sources, encrypted at rest',
+    icon: Key,
+  },
+  {
+    href: '/settings/pricing',
+    label: 'Pricing Config',
+    desc: 'Per-source unit costs used by the estimator',
+    icon: DollarSign,
   },
 ];
 
