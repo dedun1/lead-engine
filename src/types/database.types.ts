@@ -1060,7 +1060,34 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_activity_feed: {
+        Args: {
+          p_start: string
+          p_end: string
+          p_user_ids: string[] | null
+          p_include_calls: boolean
+          p_activity_types: string[] | null
+          p_include_generation: boolean
+          p_include_triggers: boolean
+          p_lead_search: string | null
+          p_niche_id: string | null
+          p_cursor: string | null
+          p_limit: number
+        }
+        Returns: {
+          kind: string
+          occurred_at: string
+          user_id: string | null
+          lead_id: string | null
+          payload: Json
+          source_id: string
+          business_name: string | null
+          city: string | null
+          region: string | null
+          niche_name: string | null
+          actor_name: string | null
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

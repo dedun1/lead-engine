@@ -29,6 +29,7 @@ type Props = {
   teamMembers: TeamMember[];
   onClose: () => void;
   onRefresh: () => void;
+  initialTab?: 'overview' | 'intelligence' | 'activity' | 'raw';
 };
 
 export function LeadDetailDrawer({
@@ -38,6 +39,7 @@ export function LeadDetailDrawer({
   teamMembers,
   onClose,
   onRefresh,
+  initialTab = 'overview',
 }: Props) {
   const [lead, setLead] = useState<LeadDetail | null>(null);
   const [loading, setLoading] = useState(false);
@@ -119,7 +121,7 @@ export function LeadDetailDrawer({
                 void load();
               })}
             />
-            <Tabs defaultValue="overview" className="flex min-h-0 flex-1 flex-col">
+            <Tabs defaultValue={initialTab} className="flex min-h-0 flex-1 flex-col">
               <TabsList className="mx-6 mt-2 w-auto justify-start">
                 <TabsTrigger value="overview">Overview</TabsTrigger>
                 <TabsTrigger value="intelligence">Intelligence</TabsTrigger>
