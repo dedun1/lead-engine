@@ -17,6 +17,8 @@ import { fetchLeadById } from './actions-fetch';
 import { OutcomeModal } from '@/app/(app)/call-queue/outcome-modal';
 import { recordOpenerUseOnCall } from '@/lib/opener/record-use';
 import { assignLead, queueLead, updateLeadStatus } from './actions-mutations';
+import { fetchActiveTriggersForLead } from '@/lib/triggers/fetch-lead-triggers';
+import type { LeadTriggerRow } from '@/components/pipeline/lead-triggers-panel';
 
 type TeamMember = { id: string; display_name: string | null; email: string };
 
@@ -47,12 +49,19 @@ export function LeadDetailDrawer({
   const [activeOpenerVariantId, setActiveOpenerVariantId] = useState<string | null>(
     null,
   );
+  const [triggers, setTriggers] = useState<LeadTriggerRow[]>([]);
+  const [openerTriggerId, setOpenerTriggerId] = useState<string | null>(null);
+  const [openerRefreshKey, setOpenerRefreshKey] = useState(0);
 
   const load = useCallback(async () => {
     if (!leadId) return;
     setLoading(true);
-    const data = await fetchLeadById(leadId);
+    const [data, trig] = await Promise.all([
+      fetchLeadById(leadId),
+      fetchActiveTriggersForLead(leadId),
+    ]);
     setLead(data);
+    setTriggers(trig);
     if (data) {
       setStatusDraft((data.status as LeadStatus) ?? 'new');
       setAssignDraft(data.assigned_to);
@@ -122,6 +131,12 @@ export function LeadDetailDrawer({
                   <LeadOverviewTab
                     lead={lead}
                     isAdmin={isAdmin}
+                    triggers={triggers}
+                    onUseTriggerInOpener={(triggerId) => {
+                      setOpenerTriggerId(triggerId);
+                      setOpenerRefreshKey((k) => k + 1);
+                      toast.message('Switch to Intelligence tab to generate opener with trigger context');
+                    }}
                     onRefresh={() => {
                       void load();
                       onRefresh();
@@ -129,7 +144,12 @@ export function LeadDetailDrawer({
                   />
                 </TabsContent>
                 <TabsContent value="intelligence" className="mt-0">
-                  <LeadIntelligenceTab lead={lead} isAdmin={isAdmin} />
+                  <LeadIntelligenceTab
+                    lead={lead}
+                    isAdmin={isAdmin}
+                    openerTriggerId={openerTriggerId}
+                    openerRefreshKey={openerRefreshKey}
+                  />
                 </TabsContent>
                 <TabsContent value="activity" className="mt-0">
                   <LeadActivityTab lead={lead} />

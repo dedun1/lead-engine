@@ -53,6 +53,11 @@ The opener must:
 - Sound human, not scripted
 - Be 2-3 short sentences in opener_text (conversational, not robotic)`;
 
+export type OpenerTriggerContext = {
+  trigger_type: string;
+  payload_summary: string;
+};
+
 export type OpenerPromptArgs = {
   niche_name: string;
   niche_summary: string;
@@ -67,6 +72,7 @@ export type OpenerPromptArgs = {
   has_website: boolean;
   owner_name: string | null;
   variant_seed: number;
+  trigger_context?: OpenerTriggerContext | null;
 };
 
 export function OPENER_GENERATION_PROMPT_USER(args: OpenerPromptArgs): string {
@@ -75,7 +81,11 @@ export function OPENER_GENERATION_PROMPT_USER(args: OpenerPromptArgs): string {
     args.twentyfour_pitch_angles.slice(0, 3).join('; ') || 'n/a';
   const owner = args.owner_name?.split(/\s+/)[0] ?? 'unknown';
 
-  return `Write a hyper-personalized cold-call opener for this specific lead.
+  const triggerBlock = args.trigger_context
+    ? `This lead has an active trigger: ${args.trigger_context.trigger_type}. Context: ${args.trigger_context.payload_summary}. Use this as the PRIMARY hook in the opener.\n\n`
+    : '';
+
+  return `${triggerBlock}Write a hyper-personalized cold-call opener for this specific lead.
 
 Niche: ${args.niche_name}
 Niche summary: ${args.niche_summary}

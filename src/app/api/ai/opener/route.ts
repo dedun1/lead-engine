@@ -16,11 +16,14 @@ import { CryptoError } from '@/lib/crypto';
 import { loadLeadOpenerContext } from '@/lib/opener/lead-context';
 import { getAuthUser } from '@/lib/permissions';
 import { createClient } from '@/lib/supabase/server';
+import { payloadSummary } from '@/lib/triggers/display';
+import type { TriggerType } from '@/lib/triggers/types';
 
 const bodySchema = z.object({
   lead_id: z.string().uuid(),
   refresh: z.boolean().optional(),
   variant_seed: z.number().int().min(1).max(5).optional(),
+  trigger_id: z.string().uuid().optional(),
 });
 
 export async function POST(request: Request) {
@@ -35,7 +38,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
     }
 
-    const { lead_id, refresh, variant_seed } = parsed.data;
+    const { lead_id, refresh, variant_seed, trigger_id } = parsed.data;
     const supabase = createClient();
 
     const ctx = await loadLeadOpenerContext(lead_id);
@@ -81,6 +84,26 @@ export async function POST(request: Request) {
       );
     }
 
+    let triggerContext: { trigger_type: string; payload_summary: string } | null =
+      null;
+    if (trigger_id) {
+      const { data: trig } = await supabase
+        .from('trigger_events')
+        .select('trigger_type, details')
+        .eq('id', trigger_id)
+        .eq('lead_id', lead_id)
+        .maybeSingle();
+      if (trig?.trigger_type) {
+        triggerContext = {
+          trigger_type: trig.trigger_type,
+          payload_summary: payloadSummary(
+            trig.trigger_type as TriggerType,
+            trig.details as Record<string, unknown> | null,
+          ),
+        };
+      }
+    }
+
     const seed = variant_seed ?? Math.floor(Math.random() * 5) + 1;
     const { text, usage } = await callHaiku({
       systemPrompt: OPENER_GENERATION_PROMPT_SYSTEM,
@@ -98,6 +121,7 @@ export async function POST(request: Request) {
         has_website: Boolean(ctx.lead.has_website),
         owner_name: ctx.lead.owner_name,
         variant_seed: seed,
+        trigger_context: triggerContext,
       }),
       maxTokens: 1024,
     });
@@ -127,6 +151,7 @@ export async function POST(request: Request) {
       updated_at: now,
       times_used: 0,
       meetings_set: 0,
+      trigger_event_id: trigger_id ?? null,
     };
 
     let row;

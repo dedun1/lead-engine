@@ -17,6 +17,7 @@ type Props = {
   nicheId: string | null;
   compact?: boolean;
   refreshKey?: number;
+  triggerId?: string | null;
 };
 
 function activeVariant(
@@ -39,6 +40,7 @@ export function LeadOpenerPanel({
   nicheId,
   compact,
   refreshKey,
+  triggerId,
 }: Props) {
   const [loading, setLoading] = useState(true);
   const [generating, setGenerating] = useState(false);
@@ -68,7 +70,11 @@ export function LeadOpenerPanel({
       const res = await fetch('/api/ai/opener', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ lead_id: leadId, refresh }),
+        body: JSON.stringify({
+          lead_id: leadId,
+          refresh,
+          ...(triggerId ? { trigger_id: triggerId } : {}),
+        }),
       });
       const data = (await res.json()) as { error?: string; row?: OpenerVariantRow };
       if (!res.ok) {
@@ -82,6 +88,13 @@ export function LeadOpenerPanel({
       setConfirmRegen(false);
     }
   };
+
+  useEffect(() => {
+    if (triggerId && hasIntelligence) {
+      void generate(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [triggerId, refreshKey, hasIntelligence]);
 
   if (!hasIntelligence) {
     return (

@@ -380,10 +380,13 @@ export type Database = {
           owner_phone_source: string | null
           postal_code: string | null
           region: string | null
+          review_count_history: Json | null
           seen_again_count: number | null
           socials: Json | null
           source_log: Json | null
           status: string | null
+          website_snapshot_at: string | null
+          website_snapshot_hash: string | null
           times_called: number | null
           timezone: string | null
           updated_at: string | null
@@ -436,6 +439,7 @@ export type Database = {
           owner_phone_source?: string | null
           postal_code?: string | null
           region?: string | null
+          review_count_history?: Json | null
           seen_again_count?: number | null
           socials?: Json | null
           source_log?: Json | null
@@ -444,6 +448,8 @@ export type Database = {
           timezone?: string | null
           updated_at?: string | null
           website?: string | null
+          website_snapshot_at?: string | null
+          website_snapshot_hash?: string | null
           yelp_rating?: number | null
           yelp_review_count?: number | null
         }
@@ -492,6 +498,7 @@ export type Database = {
           owner_phone_source?: string | null
           postal_code?: string | null
           region?: string | null
+          review_count_history?: Json | null
           seen_again_count?: number | null
           socials?: Json | null
           source_log?: Json | null
@@ -500,6 +507,8 @@ export type Database = {
           timezone?: string | null
           updated_at?: string | null
           website?: string | null
+          website_snapshot_at?: string | null
+          website_snapshot_hash?: string | null
           yelp_rating?: number | null
           yelp_review_count?: number | null
         }
@@ -780,6 +789,7 @@ export type Database = {
           personalization_signals_used: Json | null
           predicted_open_rate: number | null
           times_used: number | null
+          trigger_event_id: string | null
           updated_at: string | null
         }
         Insert: {
@@ -800,6 +810,7 @@ export type Database = {
           personalization_signals_used?: Json | null
           predicted_open_rate?: number | null
           times_used?: number | null
+          trigger_event_id?: string | null
           updated_at?: string | null
         }
         Update: {
@@ -820,6 +831,7 @@ export type Database = {
           personalization_signals_used?: Json | null
           predicted_open_rate?: number | null
           times_used?: number | null
+          trigger_event_id?: string | null
           updated_at?: string | null
         }
         Relationships: [
@@ -881,6 +893,7 @@ export type Database = {
           consecutive_failures: number | null
           created_at: string | null
           id: string
+          is_disabled: boolean | null
           last_check_at: string | null
           last_error: string | null
           source: string | null
@@ -891,6 +904,7 @@ export type Database = {
           consecutive_failures?: number | null
           created_at?: string | null
           id?: string
+          is_disabled?: boolean | null
           last_check_at?: string | null
           last_error?: string | null
           source?: string | null
@@ -901,6 +915,7 @@ export type Database = {
           consecutive_failures?: number | null
           created_at?: string | null
           id?: string
+          is_disabled?: boolean | null
           last_check_at?: string | null
           last_error?: string | null
           source?: string | null
@@ -941,36 +956,45 @@ export type Database = {
       }
       trigger_events: {
         Row: {
+          actioned_at: string | null
+          actioned_by: string | null
           created_at: string | null
+          dedupe_key: string | null
           details: Json | null
           detected_at: string | null
           expires_at: string | null
           id: string
-          is_acted_on: boolean | null
+          is_actioned: boolean | null
           lead_id: string | null
           severity: string | null
           trigger_type: string | null
           updated_at: string | null
         }
         Insert: {
+          actioned_at?: string | null
+          actioned_by?: string | null
           created_at?: string | null
+          dedupe_key?: string | null
           details?: Json | null
           detected_at?: string | null
           expires_at?: string | null
           id?: string
-          is_acted_on?: boolean | null
+          is_actioned?: boolean | null
           lead_id?: string | null
           severity?: string | null
           trigger_type?: string | null
           updated_at?: string | null
         }
         Update: {
+          actioned_at?: string | null
+          actioned_by?: string | null
           created_at?: string | null
+          dedupe_key?: string | null
           details?: Json | null
           detected_at?: string | null
           expires_at?: string | null
           id?: string
-          is_acted_on?: boolean | null
+          is_actioned?: boolean | null
           lead_id?: string | null
           severity?: string | null
           trigger_type?: string | null

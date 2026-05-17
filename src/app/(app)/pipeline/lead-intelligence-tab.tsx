@@ -7,9 +7,16 @@ import type { LeadDetail } from '@/lib/pipeline/types';
 type Props = {
   lead: LeadDetail;
   isAdmin: boolean;
+  openerTriggerId?: string | null;
+  openerRefreshKey?: number;
 };
 
-export function LeadIntelligenceTab({ lead, isAdmin }: Props) {
+export function LeadIntelligenceTab({
+  lead,
+  isAdmin,
+  openerTriggerId,
+  openerRefreshKey,
+}: Props) {
   const intel = lead.niche_intelligence;
   const nicheName = lead.niche?.name ?? 'this niche';
 
@@ -53,6 +60,8 @@ export function LeadIntelligenceTab({ lead, isAdmin }: Props) {
         isAdmin={isAdmin}
         hasIntelligence
         nicheId={lead.niche_id}
+        triggerId={openerTriggerId}
+        refreshKey={openerRefreshKey}
       />
     </div>
   );

@@ -96,12 +96,22 @@ export async function fetchLeads(
     string,
     { created_at: string; activity_type: string }
   >();
+  const triggerCountMap = new Map<string, number>();
   if (ids.length) {
-    const { data: acts } = await supabase
-      .from('lead_activities')
-      .select('lead_id, created_at, activity_type')
-      .in('lead_id', ids)
-      .order('created_at', { ascending: false });
+    const now = new Date().toISOString();
+    const [{ data: acts }, { data: triggers }] = await Promise.all([
+      supabase
+        .from('lead_activities')
+        .select('lead_id, created_at, activity_type')
+        .in('lead_id', ids)
+        .order('created_at', { ascending: false }),
+      supabase
+        .from('trigger_events')
+        .select('lead_id')
+        .in('lead_id', ids)
+        .eq('is_actioned', false)
+        .or(`expires_at.is.null,expires_at.gt.${now}`),
+    ]);
     for (const a of acts ?? []) {
       if (a.lead_id && !activityMap.has(a.lead_id)) {
         activityMap.set(a.lead_id, {
@@ -109,6 +119,10 @@ export async function fetchLeads(
           activity_type: a.activity_type ?? '',
         });
       }
+    }
+    for (const t of triggers ?? []) {
+      if (!t.lead_id) continue;
+      triggerCountMap.set(t.lead_id, (triggerCountMap.get(t.lead_id) ?? 0) + 1);
     }
   }
 
@@ -139,6 +153,7 @@ export async function fetchLeads(
       owner_email: row.owner_email,
       owner_email_status: row.owner_email_status,
       enriched_at: row.enriched_at,
+      active_trigger_count: triggerCountMap.get(row.id) ?? 0,
     };
   });
 

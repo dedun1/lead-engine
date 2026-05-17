@@ -56,6 +56,7 @@ export type PipelineLeadRow = {
   owner_email: string | null;
   owner_email_status: string | null;
   enriched_at: string | null;
+  active_trigger_count: number;
 };
 
 export type LeadDetail = Database['public']['Tables']['leads']['Row'] & {

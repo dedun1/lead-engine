@@ -1,7 +1,8 @@
 'use client';
 
 import { formatDistanceToNow } from 'date-fns';
-import { Check, Mail, Star } from 'lucide-react';
+import Link from 'next/link';
+import { Check, Flame, Mail, Star } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   Table,
@@ -90,6 +91,7 @@ export function PipelineTable({
           <TableHead>Phone</TableHead>
           <TableHead>Owner</TableHead>
           <TableHead>Enriched</TableHead>
+          <TableHead>Triggers</TableHead>
           <TableHead>Location</TableHead>
           <TableHead>
             <SortHead label="Rating" col="rating" sort={sort} sortDir={sortDir} onSort={onSort} />
@@ -166,6 +168,19 @@ export function PipelineTable({
                     )}
                     {formatDistanceToNow(new Date(lead.enriched_at), { addSuffix: true })}
                   </span>
+                ) : (
+                  '—'
+                )}
+              </TableCell>
+              <TableCell onClick={(e) => e.stopPropagation()}>
+                {lead.active_trigger_count > 0 ? (
+                  <Link
+                    href="/hot-list"
+                    className="inline-flex items-center gap-1 rounded-full bg-orange-500/15 px-2 py-0.5 text-xs font-medium text-orange-800"
+                  >
+                    <Flame className="h-3 w-3" />
+                    {lead.active_trigger_count}
+                  </Link>
                 ) : (
                   '—'
                 )}

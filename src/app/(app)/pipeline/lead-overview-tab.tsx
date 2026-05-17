@@ -16,6 +16,10 @@ import {
 import { getHoursDot, HOURS_DOT_CLASS } from '@/lib/pipeline/hours-indicator';
 import { EnrichButton } from '@/components/pipeline/enrich-button';
 import { EnrichmentDisplay } from '@/components/pipeline/enrichment-display';
+import {
+  LeadTriggersPanel,
+  type LeadTriggerRow,
+} from '@/components/pipeline/lead-triggers-panel';
 import { updateLeadNotes } from './actions-mutations';
 
 const DAYS = [
@@ -58,11 +62,15 @@ export function LeadOverviewTab({
   notesFieldId,
   isAdmin,
   onRefresh,
+  triggers = [],
+  onUseTriggerInOpener,
 }: {
   lead: LeadDetail;
   notesFieldId?: string;
   isAdmin?: boolean;
   onRefresh?: () => void;
+  triggers?: LeadTriggerRow[];
+  onUseTriggerInOpener?: (triggerId: string) => void;
 }) {
   const [notes, setNotes] = useState(lead.notes ?? '');
   const [expanded, setExpanded] = useState(false);
@@ -94,6 +102,13 @@ export function LeadOverviewTab({
 
   return (
     <div className="space-y-6 text-sm">
+      <section className="space-y-2">
+        <h3 className="font-semibold">Active triggers</h3>
+        <LeadTriggersPanel
+          triggers={triggers}
+          onUseInOpener={(id) => onUseTriggerInOpener?.(id)}
+        />
+      </section>
       <section className="space-y-2">
         <h3 className="font-semibold">Contact</h3>
         {lead.business_phone ? (
