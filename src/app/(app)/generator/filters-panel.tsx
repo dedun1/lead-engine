@@ -5,12 +5,17 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Slider } from '@/components/ui/slider';
 import { Input } from '@/components/ui/input';
 import { ChevronDown } from 'lucide-react';
-import type { GenerationFilters } from '@/lib/generate/filters';
+import {
+  countAppliedFilters,
+  type GenerationFilters,
+} from '@/lib/generate/filters';
 
 type Props = {
   filters: GenerationFilters;
@@ -21,10 +26,22 @@ export function FiltersPanel({ filters, onChange }: Props) {
   const set = (patch: Partial<GenerationFilters>) =>
     onChange({ ...filters, ...patch });
 
+  const applied = countAppliedFilters(filters);
+  const ratingActive =
+    (filters.rating_min != null && filters.rating_min > 0) ||
+    (filters.rating_max != null && filters.rating_max < 5);
+
   return (
     <Collapsible className="rounded-lg border">
       <CollapsibleTrigger className="flex w-full items-center justify-between px-4 py-3 text-sm font-medium">
-        Filters
+        <span className="flex items-center gap-2">
+          Filters
+          {applied > 0 && (
+            <Badge variant="secondary" className="text-[10px]">
+              {applied} applied
+            </Badge>
+          )}
+        </span>
         <ChevronDown className="h-4 w-4" />
       </CollapsibleTrigger>
       <CollapsibleContent className="grid gap-4 px-4 pb-4 sm:grid-cols-2">
@@ -62,45 +79,78 @@ export function FiltersPanel({ filters, onChange }: Props) {
           </select>
         </div>
         <div className="space-y-2 sm:col-span-2">
-          <Label>
-            Rating {filters.rating_min ?? 0} – {filters.rating_max ?? 5}
-          </Label>
-          <Slider
-            min={0}
-            max={5}
-            step={0.5}
-            value={[filters.rating_min ?? 0, filters.rating_max ?? 5]}
-            onValueChange={([min, max]) =>
-              set({ rating_min: min, rating_max: max })
-            }
-          />
+          <Label>Google rating</Label>
+          {ratingActive ? (
+            <>
+              <p className="text-xs text-muted-foreground">
+                {filters.rating_min ?? 0} – {filters.rating_max ?? 5} stars
+              </p>
+              <Slider
+                min={0}
+                max={5}
+                step={0.5}
+                value={[filters.rating_min ?? 0, filters.rating_max ?? 5]}
+                onValueChange={([min, max]) =>
+                  set({ rating_min: min, rating_max: max })
+                }
+              />
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                className="h-8 px-2 text-xs"
+                onClick={() =>
+                  set({ rating_min: undefined, rating_max: undefined })
+                }
+              >
+                Clear rating filter
+              </Button>
+            </>
+          ) : (
+            <p className="text-xs text-muted-foreground">
+              Any rating (no filter).{' '}
+              <button
+                type="button"
+                className="text-primary underline"
+                onClick={() => set({ rating_min: 1, rating_max: 5 })}
+              >
+                Set range
+              </button>
+            </p>
+          )}
         </div>
         <div className="space-y-2">
           <Label>Min reviews</Label>
           <Input
             type="number"
+            placeholder="Any"
             value={filters.review_count_min ?? ''}
-            onChange={(e) =>
+            onChange={(e) => {
+              const raw = e.target.value.trim();
               set({
-                review_count_min: e.target.value
-                  ? Number(e.target.value)
-                  : undefined,
-              })
-            }
+                review_count_min:
+                  raw === '' || Number.isNaN(Number(raw))
+                    ? undefined
+                    : Number(raw),
+              });
+            }}
           />
         </div>
         <div className="space-y-2">
           <Label>Max reviews</Label>
           <Input
             type="number"
+            placeholder="Any"
             value={filters.review_count_max ?? ''}
-            onChange={(e) =>
+            onChange={(e) => {
+              const raw = e.target.value.trim();
               set({
-                review_count_max: e.target.value
-                  ? Number(e.target.value)
-                  : undefined,
-              })
-            }
+                review_count_max:
+                  raw === '' || Number.isNaN(Number(raw))
+                    ? undefined
+                    : Number(raw),
+              });
+            }}
           />
         </div>
         <div className="flex items-center gap-2 opacity-50 sm:col-span-2">

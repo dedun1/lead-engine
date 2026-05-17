@@ -16,7 +16,11 @@ import { CostEstimatorModal } from '@/components/lead/CostEstimatorModal';
 import { GenerationProgress } from '@/components/lead/GenerationProgress';
 import { FiltersPanel } from './filters-panel';
 import { QuantitySlider } from './quantity-slider';
-import type { GenerationFilters } from '@/lib/generate/filters';
+import {
+  DEFAULT_GENERATION_FILTERS,
+  stripGenerationFilters,
+  type GenerationFilters,
+} from '@/lib/generate/filters';
 import { getRegionsByCountry } from '@/lib/geo';
 
 type PitchingNiche = { id: string; name: string };
@@ -30,10 +34,7 @@ export function GeneratorClient({ pitchingNiches }: Props) {
   const [geo, setGeo] = useState<GeoSelection | null>(null);
   const [quantity, setQuantity] = useState(10);
   const [filters, setFilters] = useState<GenerationFilters>({
-    has_website: 'any',
-    currently_open: 'any',
-    rating_min: 0,
-    rating_max: 5,
+    ...DEFAULT_GENERATION_FILTERS,
   });
   const [citySize, setCitySize] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -91,6 +92,8 @@ export function GeneratorClient({ pitchingNiches }: Props) {
 
   const startRun = (enrichment_sources: string[]) => {
     if (!geo || !niche) return;
+    const apiFilters = stripGenerationFilters(filters);
+    console.log('[generator] filters sent to API:', apiFilters);
     setRunPayload({
       payload: {
         niche_id: niche.id,
@@ -99,7 +102,7 @@ export function GeneratorClient({ pitchingNiches }: Props) {
         city: geo.city,
         postalCode: geo.postal,
         quantity,
-        filters,
+        filters: apiFilters,
         enrichment_sources,
       },
       geoLabel: `${geo.city}, ${regionName}`,

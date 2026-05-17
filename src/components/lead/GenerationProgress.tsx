@@ -5,7 +5,10 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import type { GenerateSseEvent } from '@/lib/generate/sse';
-import type { GenerationFilters } from '@/lib/generate/filters';
+import {
+  stripGenerationFilters,
+  type GenerationFilters,
+} from '@/lib/generate/filters';
 
 type Props = {
   payload: {
@@ -58,7 +61,9 @@ export function GenerationProgress({ payload, geoLabel, onDone }: Props) {
       }
       if (event.type === 'lead_skipped_filter') {
         setFiltered((n) => n + 1);
-        pushFeed(`Filtered ${event.business_name}`);
+        pushFeed(
+          `Filtered ${event.business_name} — reason: ${event.filter_reason}`,
+        );
       }
       if (event.type === 'completed') {
         setCost(event.actual_cost_usd);
@@ -69,13 +74,18 @@ export function GenerationProgress({ payload, geoLabel, onDone }: Props) {
     };
 
     (async () => {
+      const apiPayload = {
+        ...payload,
+        filters: stripGenerationFilters(payload.filters),
+      };
+      console.log('[generator] filters sent to API:', apiPayload.filters);
       const res = await fetch('/api/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'text/event-stream',
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(apiPayload),
         signal: ac.signal,
       });
 

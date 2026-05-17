@@ -3,7 +3,10 @@ import { getAuthUser, getTeamMemberForUser } from '@/lib/permissions';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { runGenerationJob } from '@/lib/generate/run-job';
 import { createSseStream } from '@/lib/generate/sse';
-import type { GenerationFilters } from '@/lib/generate/filters';
+import {
+  stripGenerationFilters,
+  type GenerationFilters,
+} from '@/lib/generate/filters';
 
 const bodySchema = z.object({
   niche_id: z.string().uuid(),
@@ -41,6 +44,9 @@ export async function POST(request: Request) {
   }
 
   const body = parsed.data;
+  const filters = stripGenerationFilters(
+    (body.filters ?? {}) as GenerationFilters,
+  );
   const admin = createAdminClient();
   const member = await getTeamMemberForUser(user.id);
 
@@ -66,7 +72,7 @@ export async function POST(request: Request) {
       city: body.city,
       postal_code: body.postalCode ?? null,
       requested_count: body.quantity,
-      filters: (body.filters ?? {}) as GenerationFilters,
+      filters,
       status: 'running',
       started_by: member?.id ?? user.id,
       started_at: new Date().toISOString(),
@@ -95,7 +101,7 @@ export async function POST(request: Request) {
           city: body.city,
           postal_code: body.postalCode,
           quantity: body.quantity,
-          filters: (body.filters ?? {}) as GenerationFilters,
+          filters,
           enrichment_sources: enrichment,
           started_by: member?.id ?? user.id,
           signal: request.signal,

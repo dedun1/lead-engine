@@ -11,6 +11,68 @@ export type GenerationFilters = {
   currently_open?: 'any' | 'open_now' | 'opens_within_2h';
 };
 
+/** Permissive defaults — no listing should be filtered until the user opts in. */
+export const DEFAULT_GENERATION_FILTERS: GenerationFilters = {
+  has_website: 'any',
+  currently_open: 'any',
+  rating_min: undefined,
+  rating_max: undefined,
+  review_count_min: undefined,
+  review_count_max: undefined,
+};
+
+/** Remove "any" / empty values before persisting or applying filters. */
+export function stripGenerationFilters(
+  filters: GenerationFilters,
+): GenerationFilters {
+  const out: GenerationFilters = {};
+  if (filters.has_website && filters.has_website !== 'any') {
+    out.has_website = filters.has_website;
+  }
+  if (filters.currently_open && filters.currently_open !== 'any') {
+    out.currently_open = filters.currently_open;
+  }
+  if (
+    filters.rating_min != null &&
+    !Number.isNaN(filters.rating_min) &&
+    filters.rating_min > 0
+  ) {
+    out.rating_min = filters.rating_min;
+  }
+  if (
+    filters.rating_max != null &&
+    !Number.isNaN(filters.rating_max) &&
+    filters.rating_max < 5
+  ) {
+    out.rating_max = filters.rating_max;
+  }
+  if (
+    filters.review_count_min != null &&
+    !Number.isNaN(filters.review_count_min) &&
+    filters.review_count_min > 0
+  ) {
+    out.review_count_min = filters.review_count_min;
+  }
+  if (
+    filters.review_count_max != null &&
+    !Number.isNaN(filters.review_count_max)
+  ) {
+    out.review_count_max = filters.review_count_max;
+  }
+  return out;
+}
+
+export function countAppliedFilters(filters: GenerationFilters): number {
+  let n = 0;
+  if (filters.has_website && filters.has_website !== 'any') n += 1;
+  if (filters.currently_open && filters.currently_open !== 'any') n += 1;
+  if (filters.rating_min != null && filters.rating_min > 0) n += 1;
+  if (filters.rating_max != null && filters.rating_max < 5) n += 1;
+  if (filters.review_count_min != null && filters.review_count_min > 0) n += 1;
+  if (filters.review_count_max != null) n += 1;
+  return n;
+}
+
 export function applyListingFilters(
   listing: RawGoogleMapsListing,
   filters: GenerationFilters,
@@ -26,6 +88,7 @@ export function applyListingFilters(
 
   if (
     filters.rating_min != null &&
+    filters.rating_min > 0 &&
     (listing.rating == null || listing.rating < filters.rating_min)
   ) {
     return { pass: false, reason: 'rating_below_min' };
@@ -40,6 +103,7 @@ export function applyListingFilters(
 
   if (
     filters.review_count_min != null &&
+    filters.review_count_min > 0 &&
     (listing.review_count == null ||
       listing.review_count < filters.review_count_min)
   ) {
