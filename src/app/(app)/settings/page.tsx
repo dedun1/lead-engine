@@ -1,11 +1,14 @@
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import {
   Activity,
   Ban,
   DollarSign,
   Key,
   MessageSquare,
+  Shield,
 } from 'lucide-react';
+import { getSessionContext } from '@/lib/permissions';
 
 const SECTIONS = [
   {
@@ -40,9 +43,12 @@ const SECTIONS = [
   },
 ];
 
-export default function SettingsIndexPage() {
+export default async function SettingsIndexPage() {
+  const ctx = await getSessionContext();
+  if (!ctx) redirect('/login');
+
   return (
-    <div className="mx-auto max-w-3xl space-y-6 px-6 py-10">
+    <div className="space-y-6">
       <div className="space-y-1">
         <h1 className="text-2xl font-semibold tracking-tight">Settings</h1>
         <p className="text-sm text-muted-foreground">
@@ -50,6 +56,22 @@ export default function SettingsIndexPage() {
         </p>
       </div>
       <ul className="space-y-2">
+        {ctx.isAdmin && (
+          <li>
+            <Link
+              href="/settings/admin"
+              className="flex items-start gap-4 rounded-lg border border-primary/30 bg-card p-4 transition-colors hover:bg-accent"
+            >
+              <Shield className="mt-0.5 h-5 w-5 text-primary" />
+              <div className="space-y-0.5">
+                <div className="text-sm font-medium">Admin tools</div>
+                <div className="text-xs text-muted-foreground">
+                  Stats, exports, bulk ops, audit log
+                </div>
+              </div>
+            </Link>
+          </li>
+        )}
         {SECTIONS.map(({ href, label, desc, icon: Icon }) => (
           <li key={href}>
             <Link

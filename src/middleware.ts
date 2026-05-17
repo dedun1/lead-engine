@@ -65,6 +65,21 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
+  if (user && pathname.startsWith('/settings/admin')) {
+    const { data: member } = await supabase
+      .from('team_members')
+      .select('role, is_active')
+      .eq('id', user.id)
+      .maybeSingle();
+    const isAdmin = member?.role === 'admin' && member?.is_active !== false;
+    if (!isAdmin) {
+      const settingsUrl = request.nextUrl.clone();
+      settingsUrl.pathname = '/settings';
+      settingsUrl.searchParams.set('adminRequired', '1');
+      return NextResponse.redirect(settingsUrl);
+    }
+  }
+
   return response;
 }
 
