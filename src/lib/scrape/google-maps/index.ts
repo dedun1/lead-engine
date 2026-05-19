@@ -1,3 +1,4 @@
+import type { Page } from 'playwright';
 import {
   closeMapsBrowser,
   gotoMapsSearch,
@@ -11,6 +12,7 @@ import {
   extractVisibleListings,
   scrollResultsFeed,
 } from './extract';
+import { enrichListingFromDetailPanel } from './extract-detail';
 import {
   buildMapsQuery,
   type RawGoogleMapsListing,
@@ -25,6 +27,10 @@ import {
 
 export type { RawGoogleMapsListing, ScrapeSearchParams };
 export { ScraperBlockedError, ScraperNoResultsError, ScraperTimeoutError };
+
+const ENRICH_CAP = 30;
+/** ~7s per listing (panel wait + throttle); health check uses 5 listings. */
+const SCRAPE_TIMEOUT_MS = 120_000;
 
 async function withHealth<T>(
   fn: () => Promise<T>,
@@ -46,6 +52,37 @@ async function withHealth<T>(
   }
 }
 
+async function enrichCollectedListings(
+  page: Page,
+  collected: RawGoogleMapsListing[],
+  max: number,
+): Promise<RawGoogleMapsListing[]> {
+  const slice = collected.slice(0, max);
+  const enrichCount = Math.min(slice.length, ENRICH_CAP);
+  if (slice.length > ENRICH_CAP) {
+    console.warn(
+      `[google-maps] Enrichment capped at ${ENRICH_CAP}; ${slice.length - ENRICH_CAP} listings remain sidebar-only`,
+    );
+  }
+  console.log(
+    `[google-maps] Enriching ${enrichCount} listings via detail panel (est ${enrichCount * 7}s)`,
+  );
+
+  const enriched: RawGoogleMapsListing[] = [];
+  for (let i = 0; i < slice.length; i += 1) {
+    if (i < enrichCount) {
+      try {
+        enriched.push(await enrichListingFromDetailPanel(page, slice[i], i));
+      } catch {
+        enriched.push(slice[i]);
+      }
+    } else {
+      enriched.push(slice[i]);
+    }
+  }
+  return enriched;
+}
+
 export async function scrapeGoogleMaps(
   params: ScrapeSearchParams,
 ): Promise<RawGoogleMapsListing[]> {
@@ -53,6 +90,7 @@ export async function scrapeGoogleMaps(
     const max = params.maxResults ?? 50;
     const query = buildMapsQuery(params);
     const { page } = await launchMapsPage();
+    page.setDefaultTimeout(SCRAPE_TIMEOUT_MS);
     const collected: RawGoogleMapsListing[] = [];
 
     try {
@@ -72,14 +110,15 @@ export async function scrapeGoogleMaps(
         const after = await countVisibleListings(page);
         if (after <= before) break;
       }
+
+      if (collected.length === 0) {
+        throw new ScraperNoResultsError();
+      }
+
+      return await enrichCollectedListings(page, collected, max);
     } finally {
       await page.close().catch(() => undefined);
     }
-
-    if (collected.length === 0) {
-      throw new ScraperNoResultsError();
-    }
-    return collected.slice(0, max);
   });
 }
 
@@ -97,11 +136,14 @@ export async function healthCheck(): Promise<{
       city: 'New York',
       maxResults: 5,
     });
+    const withPhone = rows.filter((r) => r.phone_raw).length;
     const ok = rows.length >= 3;
     return {
       ok,
       latency_ms: Date.now() - start,
-      error: ok ? undefined : 'Fewer than 3 results',
+      error: ok
+        ? undefined
+        : `Fewer than 3 results (${withPhone} with phone)`,
     };
   } catch (error) {
     return {
