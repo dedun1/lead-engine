@@ -18,8 +18,8 @@ export function getHoursDot(
 }
 
 export const HOURS_DOT_CLASS: Record<HoursDot, string> = {
-  open: 'bg-green-500',
-  soon: 'bg-yellow-500',
-  closed: 'bg-gray-400',
-  unknown: 'bg-gray-300',
+  open: 'bg-chart-3',
+  soon: 'bg-warning',
+  closed: 'bg-muted-foreground/50',
+  unknown: 'bg-border',
 };

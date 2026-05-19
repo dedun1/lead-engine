@@ -170,7 +170,7 @@ export function LeadOverviewTab({
         <h3 className="font-semibold">Business signals</h3>
         {lead.google_rating != null && (
           <p className="flex items-center gap-1">
-            <Star className="h-4 w-4 fill-yellow-400 text-yellow-500" />
+            <Star className="h-4 w-4 fill-chart-5 text-chart-5" />
             {lead.google_rating} ({lead.google_review_count ?? 0} reviews)
           </p>
         )}

@@ -14,37 +14,37 @@ const OUTCOMES: {
     value: 'answered',
     label: 'Answered',
     hint: 'They picked up',
-    className: 'bg-green-600 hover:bg-green-700 text-white',
+    className: 'bg-chart-3 hover:bg-chart-3/90 text-primary-foreground',
   },
   {
     value: 'no_answer',
     label: 'No answer',
     hint: 'Rang out / no voicemail',
-    className: 'bg-gray-500 hover:bg-gray-600 text-white',
+    className: 'bg-secondary hover:bg-secondary/80 text-secondary-foreground',
   },
   {
     value: 'voicemail',
     label: 'Voicemail',
     hint: 'Left a voicemail',
-    className: 'bg-yellow-600 hover:bg-yellow-700 text-white',
+    className: 'bg-warning hover:bg-warning/90 text-primary-foreground',
   },
   {
     value: 'busy',
     label: 'Busy',
     hint: 'Busy signal',
-    className: 'bg-orange-500 hover:bg-orange-600 text-white',
+    className: 'bg-chart-5 hover:bg-chart-5/90 text-primary-foreground',
   },
   {
     value: 'disconnected',
     label: 'Disconnected',
     hint: 'Dead / out of service',
-    className: 'bg-red-600 hover:bg-red-700 text-white',
+    className: 'bg-destructive hover:bg-destructive/90 text-destructive-foreground',
   },
   {
     value: 'wrong_number',
     label: 'Wrong number',
     hint: 'Wrong person or business',
-    className: 'bg-red-700 hover:bg-red-800 text-white',
+    className: 'bg-destructive/80 hover:bg-destructive text-destructive-foreground',
   },
 ];
 
@@ -54,18 +54,17 @@ type Props = {
 
 export function OutcomeModalStateA({ onSelect }: Props) {
   return (
-    <div className="flex flex-col gap-2">
-      <p className="text-sm text-muted-foreground">What happened on this call?</p>
+    <div className="grid gap-2 sm:grid-cols-2">
       {OUTCOMES.map((o) => (
         <Button
           key={o.value}
           type="button"
-          size="lg"
-          className={cn('h-auto flex-col items-start py-3', o.className)}
+          variant="secondary"
+          className={cn('h-auto flex-col items-start py-3 text-left', o.className)}
           onClick={() => onSelect(o.value)}
         >
-          <span className="text-base font-semibold">{o.label}</span>
-          <span className="text-xs font-normal opacity-90">{o.hint}</span>
+          <span className="font-semibold">{o.label}</span>
+          <span className="text-xs opacity-90">{o.hint}</span>
         </Button>
       ))}
     </div>

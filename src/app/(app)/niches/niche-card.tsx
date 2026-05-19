@@ -45,7 +45,7 @@ export function NicheCard({
               className={cn(
                 'h-4 w-4',
                 niche.is_favorited
-                  ? 'fill-yellow-400 text-yellow-400'
+                  ? 'fill-chart-5 text-chart-5'
                   : 'text-muted-foreground',
               )}
             />

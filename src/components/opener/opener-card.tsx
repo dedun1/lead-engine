@@ -73,7 +73,7 @@ export function OpenerCard({
         {rate != null && <span>Predicted open rate: {rate}%</span>}
         <span>Used {variant.times_used ?? 0} times</span>
         <span>Meetings: {variant.meetings_set ?? 0}</span>
-        {variant.is_edited && <span className="text-amber-600">Edited</span>}
+        {variant.is_edited && <span className="text-warning">Edited</span>}
       </div>
       <div className="flex flex-wrap gap-2">
         <Button type="button" size="sm" variant="outline" onClick={copy}>

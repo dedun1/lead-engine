@@ -118,7 +118,7 @@ export function HotListClient({
       <header className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
           <h1 className="text-2xl font-bold flex items-center gap-2">
-            <Flame className="h-6 w-6 text-orange-500" />
+            <Flame className="h-6 w-6 text-chart-4" />
             Hot List — leads with reason to call now
           </h1>
           <p className="text-sm text-muted-foreground mt-1">

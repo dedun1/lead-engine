@@ -153,7 +153,7 @@ export function PipelineTable({
                   <span className="flex items-center gap-1">
                     {lead.owner_name}
                     {lead.owner_email_status === 'verified' && (
-                      <Mail className="h-3 w-3 text-green-600" aria-label="Email verified" />
+                      <Mail className="h-3 w-3 text-chart-3" aria-label="Email verified" />
                     )}
                   </span>
                 ) : (
@@ -164,7 +164,7 @@ export function PipelineTable({
                 {lead.enriched_at ? (
                   <span className="flex items-center gap-1">
                     {(lead.owner_name || lead.owner_email) && (
-                      <Check className="h-3 w-3 text-green-600" />
+                      <Check className="h-3 w-3 text-chart-3" />
                     )}
                     {formatDistanceToNow(new Date(lead.enriched_at), { addSuffix: true })}
                   </span>
@@ -176,7 +176,7 @@ export function PipelineTable({
                 {lead.active_trigger_count > 0 ? (
                   <Link
                     href="/hot-list"
-                    className="inline-flex items-center gap-1 rounded-full bg-orange-500/15 px-2 py-0.5 text-xs font-medium text-orange-800"
+                    className="inline-flex items-center gap-1 rounded-full bg-chart-4/15 px-2 py-0.5 text-xs font-medium text-chart-4"
                   >
                     <Flame className="h-3 w-3" />
                     {lead.active_trigger_count}
@@ -191,7 +191,7 @@ export function PipelineTable({
               <TableCell>
                 {lead.google_rating != null ? (
                   <span className="flex items-center gap-1 text-sm">
-                    <Star className="h-3 w-3 fill-yellow-400 text-yellow-500" />
+                    <Star className="h-3 w-3 fill-chart-5 text-chart-5" />
                     {lead.google_rating}
                     <span className="text-muted-foreground">
                       ({lead.google_review_count ?? 0})

@@ -28,10 +28,10 @@ import { SEVERITY_CLASS } from '@/lib/triggers/display';
 
 function CallIcon({ outcome }: { outcome: string | null }) {
   const o = outcome ?? '';
-  if (o === 'answered') return <PhoneCall className="h-5 w-5 text-emerald-600" />;
-  if (o === 'voicemail') return <PhoneForwarded className="h-5 w-5 text-amber-600" />;
-  if (o === 'wrong_number') return <PhoneOff className="h-5 w-5 text-slate-500" />;
-  return <Phone className="h-5 w-5 text-red-600" />;
+  if (o === 'answered') return <PhoneCall className="h-5 w-5 text-chart-3" />;
+  if (o === 'voicemail') return <PhoneForwarded className="h-5 w-5 text-warning" />;
+  if (o === 'wrong_number') return <PhoneOff className="h-5 w-5 text-muted-foreground" />;
+  return <Phone className="h-5 w-5 text-destructive" />;
 }
 
 function KindIcon({ entry }: { entry: ActivityFeedEntry }) {
@@ -42,27 +42,27 @@ function KindIcon({ entry }: { entry: ActivityFeedEntry }) {
     return <ArrowRightLeft className="h-5 w-5 text-muted-foreground" />;
   }
   if (entry.kind === 'enrichment_added') {
-    return <Search className="h-5 w-5 text-blue-600" />;
+    return <Search className="h-5 w-5 text-chart-2" />;
   }
   if (entry.kind === 'note_added') {
-    return <StickyNote className="h-5 w-5 text-amber-700" />;
+    return <StickyNote className="h-5 w-5 text-warning" />;
   }
   if (entry.kind === 'lead_blocked') {
-    return <Ban className="h-5 w-5 text-red-600" />;
+    return <Ban className="h-5 w-5 text-destructive" />;
   }
   if (entry.kind === 'generation') {
     return <PlusCircle className="h-5 w-5 text-primary" />;
   }
   if (entry.kind === 'trigger') {
-    return <Zap className="h-5 w-5 text-orange-500" />;
+    return <Zap className="h-5 w-5 text-chart-4" />;
   }
   return <Phone className="h-5 w-5" />;
 }
 
 function sentimentClass(score: number): string {
-  if (score >= 1) return 'bg-emerald-500/15 text-emerald-800';
-  if (score <= -1) return 'bg-red-500/15 text-red-800';
-  return 'bg-slate-500/15 text-slate-700';
+  if (score >= 1) return 'bg-chart-3/15 text-chart-3';
+  if (score <= -1) return 'bg-destructive/15 text-destructive';
+  return 'bg-muted text-muted-foreground';
 }
 
 type Props = {

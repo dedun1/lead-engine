@@ -1,4 +1,5 @@
 import type { ScraperHealthRow } from '@/lib/health/fetch-sources';
+import { HEALTH_STATUS_CLASS } from '@/lib/ui/semantic-classes';
 
 export type DisplayHealthStatus = 'healthy' | 'degraded' | 'down' | 'disabled';
 
@@ -18,9 +19,5 @@ export function aggregateHealthCounts(rows: ScraperHealthRow[]) {
   return counts;
 }
 
-export const STATUS_BADGE: Record<DisplayHealthStatus, string> = {
-  healthy: 'bg-emerald-500/15 text-emerald-800',
-  degraded: 'bg-amber-500/15 text-amber-800',
-  down: 'bg-red-500/15 text-red-800',
-  disabled: 'bg-slate-500/15 text-slate-600',
-};
+export const STATUS_BADGE: Record<DisplayHealthStatus, string> =
+  HEALTH_STATUS_CLASS as Record<DisplayHealthStatus, string>;

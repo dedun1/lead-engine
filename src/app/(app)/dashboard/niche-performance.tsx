@@ -23,8 +23,9 @@ import {
 } from '@/components/ui/sheet';
 import type { NichePerformanceRow, OpenerPerformanceRow } from '@/lib/dashboard/types';
 import { formatPct } from './format';
+import { NICHE_STATUS_ICON } from '@/lib/ui/semantic-classes';
 
-const STATUS_ICON = { worth: '🟢', inconclusive: '🟡', skip: '🔴' } as const;
+const STATUS_ICON = { worth: '●', inconclusive: '●', skip: '●' } as const;
 
 export function DashboardNichePerformance({
   rows,
@@ -82,7 +83,10 @@ export function DashboardNichePerformance({
                   <TableCell>{formatPct(row.interested_rate)}</TableCell>
                   <TableCell>{row.meetings}</TableCell>
                   <TableCell>
-                    {STATUS_ICON[row.status]} {row.status}
+                    <span className={NICHE_STATUS_ICON[row.status]}>
+                      {STATUS_ICON[row.status]}
+                    </span>{' '}
+                    {row.status}
                   </TableCell>
                 </TableRow>
               ))}
@@ -110,7 +114,7 @@ export function DashboardNichePerformance({
                 {bestHoursByNiche[selected.niche_id]?.label ?? 'Need more data'}
               </p>
               {selected.calls < 5 && (
-                <p className="text-amber-600">Need more data (n&lt;5)</p>
+                <p className="text-warning">Need more data (n&lt;5)</p>
               )}
             </div>
           )}

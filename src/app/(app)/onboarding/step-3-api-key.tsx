@@ -95,7 +95,7 @@ export function StepApiKey({
           Test
         </Button>
         {status === 'ok' && (
-          <span className="flex items-center gap-1 text-sm text-emerald-600">
+          <span className="flex items-center gap-1 text-sm text-chart-3">
             <Check className="h-4 w-4" /> Verified
           </span>
         )}

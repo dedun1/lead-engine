@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 import type { LeadStatus } from '@/lib/pipeline/types';
-import { STATUS_BADGE_CLASS } from '@/lib/pipeline/status';
+import { STATUS_DOT_CLASS } from '@/lib/pipeline/status';
 import type { QueueFilter, QueueLeadRow } from '@/lib/queue/types';
 
 const ROW_HEIGHT = 52;
@@ -14,13 +14,6 @@ const FILTER_CHIPS: { id: QueueFilter; label: string }[] = [
   { id: 'mine', label: 'My queue' },
   { id: 'unassigned', label: 'Unassigned' },
 ];
-
-function statusDotClass(status: LeadStatus): string {
-  const badge = STATUS_BADGE_CLASS[status];
-  if (badge.includes('purple')) return 'bg-purple-500';
-  if (badge.includes('yellow')) return 'bg-yellow-500';
-  return 'bg-muted-foreground';
-}
 
 type Props = {
   leads: QueueLeadRow[];
@@ -162,7 +155,7 @@ function QueueRow({
       <span
         className={cn(
           'h-2 w-2 shrink-0 rounded-full',
-          statusDotClass(lead.status),
+          STATUS_DOT_CLASS[lead.status],
         )}
         aria-hidden
       />

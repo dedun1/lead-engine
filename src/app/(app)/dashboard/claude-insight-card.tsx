@@ -154,7 +154,7 @@ export function ClaudeInsightCard({
       <Card>
         <CardHeader>
           <CardTitle>This week&apos;s Claude insights</CardTitle>
-          <CardDescription className="text-amber-600">{error}</CardDescription>
+          <CardDescription className="text-warning">{error}</CardDescription>
         </CardHeader>
         <CardContent>
           <Button variant="outline" size="sm" onClick={() => void loadInsight(false)}>

@@ -10,14 +10,25 @@ import {
 } from '@/components/ui/card';
 import type { HeatmapCell } from '@/lib/dashboard/types';
 import { dayLabels } from '@/lib/dashboard/date-range';
+import { useChartColors } from '@/lib/dashboard/chart-colors';
 import { formatPct } from './format';
 
-function cellColor(rate: number, calls: number): string {
-  if (calls === 0) return 'bg-muted';
-  if (rate >= 0.4) return 'bg-emerald-500/80';
-  if (rate >= 0.25) return 'bg-emerald-400/50';
-  if (rate >= 0.15) return 'bg-amber-400/50';
-  return 'bg-red-400/40';
+function cellStyle(
+  rate: number,
+  calls: number,
+  colors: ReturnType<typeof useChartColors>,
+): React.CSSProperties | undefined {
+  if (calls === 0) return undefined;
+  const alpha = rate >= 0.4 ? 0.85 : rate >= 0.25 ? 0.55 : rate >= 0.15 ? 0.45 : 0.35;
+  const base =
+    rate >= 0.4
+      ? colors.chart3
+      : rate >= 0.25
+        ? colors.chart3
+        : rate >= 0.15
+          ? colors.chart5
+          : colors.chart4;
+  return { backgroundColor: base, opacity: alpha };
 }
 
 export function DashboardCallHeatmap({
@@ -29,6 +40,7 @@ export function DashboardCallHeatmap({
 }) {
   const [hover, setHover] = useState<HeatmapCell | null>(null);
   const days = dayLabels();
+  const chartColors = useChartColors();
 
   const bestLabel =
     bestSlot && bestSlot.calls >= 20
@@ -63,10 +75,12 @@ export function DashboardCallHeatmap({
                     connect_rate: 0,
                     interested_rate: 0,
                   };
+                const style = cellStyle(cell.connect_rate, cell.calls, chartColors);
                 return (
                   <div
                     key={`${d}-${h}`}
-                    className={`h-4 min-w-[12px] rounded-sm ${cellColor(cell.connect_rate, cell.calls)}`}
+                    className={`h-4 min-w-[12px] rounded-sm ${cell.calls === 0 ? 'bg-muted' : ''}`}
+                    style={style}
                     onMouseEnter={() => setHover(cell)}
                     onMouseLeave={() => setHover(null)}
                   />

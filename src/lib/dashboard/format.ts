@@ -9,9 +9,9 @@ export function formatDelta(delta: number | null): string {
 }
 
 export function conversionColor(rate: number): string {
-  if (rate > 0.15) return 'text-emerald-600';
-  if (rate >= 0.05) return 'text-amber-600';
-  return 'text-red-600';
+  if (rate > 0.15) return 'text-chart-3';
+  if (rate >= 0.05) return 'text-warning';
+  return 'text-destructive';
 }
 
 export function sparklineBars(values: number[]): string {

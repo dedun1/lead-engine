@@ -2,20 +2,13 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { Copy } from 'lucide-react';
-import { useTheme } from 'next-themes';
 import { toast } from 'sonner';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { ThemePicker } from './theme-picker';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -45,7 +38,6 @@ export function ProfileForm({
   isAdmin: boolean;
 }) {
   const router = useRouter();
-  const { theme, setTheme } = useTheme();
   const [name, setName] = useState(member.display_name ?? '');
   const [saved, setSaved] = useState(false);
   const [signingOut, setSigningOut] = useState(false);
@@ -71,8 +63,8 @@ export function ProfileForm({
 
   const roleClass =
     member.role === 'admin'
-      ? 'bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-200'
-      : 'bg-blue-100 text-blue-900 dark:bg-blue-950 dark:text-blue-200';
+      ? 'bg-warning/15 text-warning'
+      : 'bg-chart-2/15 text-chart-2';
 
   return (
     <Card>
@@ -137,19 +129,7 @@ export function ProfileForm({
             </AlertDialogContent>
           </AlertDialog>
         )}
-        <div className="space-y-2">
-          <Label>Theme</Label>
-          <Select value={theme ?? 'system'} onValueChange={setTheme}>
-            <SelectTrigger className="w-40">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="system">System</SelectItem>
-              <SelectItem value="light">Light</SelectItem>
-              <SelectItem value="dark">Dark</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+        <ThemePicker />
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button variant="destructive" className="w-full" disabled={signingOut}>

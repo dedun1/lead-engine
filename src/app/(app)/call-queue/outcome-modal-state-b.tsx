@@ -16,38 +16,38 @@ const SUB_OPTIONS: {
   label: string;
   className: string;
 }[] = [
-  { value: 'interested', label: 'Interested', className: 'text-green-700' },
-  { value: 'not_interested', label: 'Not interested', className: 'text-gray-600' },
+  { value: 'interested', label: 'Interested', className: 'text-chart-3' },
+  { value: 'not_interested', label: 'Not interested', className: 'text-muted-foreground' },
   {
     value: 'follow_up_requested',
     label: 'Follow up requested',
-    className: 'text-yellow-700',
+    className: 'text-warning',
   },
   {
     value: 'booked_meeting',
     label: 'Booked meeting',
-    className: 'text-green-800 font-semibold',
+    className: 'text-chart-3 font-semibold',
   },
   {
     value: 'price_objection',
     label: 'Price objection',
-    className: 'text-orange-600',
+    className: 'text-chart-4',
   },
   {
     value: 'already_has_solution',
     label: 'Already has solution',
-    className: 'text-gray-600',
+    className: 'text-muted-foreground',
   },
   {
     value: 'decision_maker_unavailable',
     label: 'Decision maker not available',
-    className: 'text-yellow-700',
+    className: 'text-warning',
   },
-  { value: 'hostile', label: 'Hostile', className: 'text-red-600' },
+  { value: 'hostile', label: 'Hostile', className: 'text-destructive' },
   {
     value: 'dnc_requested',
     label: 'DNC requested',
-    className: 'text-red-800 font-semibold',
+    className: 'text-destructive font-semibold',
   },
 ];
 

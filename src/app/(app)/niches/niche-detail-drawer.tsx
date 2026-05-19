@@ -89,7 +89,7 @@ export function NicheDetailDrawer({
                       className={cn(
                         'h-5 w-5',
                         niche.is_favorited
-                          ? 'fill-yellow-400 text-yellow-400'
+                          ? 'fill-chart-5 text-chart-5'
                           : 'text-muted-foreground',
                       )}
                     />

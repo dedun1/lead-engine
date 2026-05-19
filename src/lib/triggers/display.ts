@@ -1,4 +1,5 @@
 import type { TriggerType } from './types';
+import { TRIGGER_SEVERITY_CLASS } from '@/lib/ui/semantic-classes';
 
 export const TRIGGER_LABELS: Record<TriggerType, string> = {
   review_velocity_spike: 'Review velocity spike',
@@ -52,9 +53,4 @@ export function payloadSummary(
   }
 }
 
-export const SEVERITY_CLASS: Record<string, string> = {
-  low: 'bg-slate-500/15 text-slate-700',
-  medium: 'bg-amber-500/15 text-amber-800',
-  high: 'bg-orange-500/15 text-orange-800',
-  critical: 'bg-red-500/15 text-red-800',
-};
+export const SEVERITY_CLASS: Record<string, string> = TRIGGER_SEVERITY_CLASS;

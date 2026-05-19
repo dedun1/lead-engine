@@ -1,0 +1,90 @@
+/* Light — Stripe-inspired */
+:root,
+.light {
+  --background: #ffffff;
+  --foreground: #0a2540;
+  --card: #ffffff;
+  --card-foreground: #0a2540;
+  --popover: #ffffff;
+  --popover-foreground: #0a2540;
+  --primary: #635bff;
+  --primary-foreground: #ffffff;
+  --secondary: #f6f9fc;
+  --secondary-foreground: #0a2540;
+  --muted: #f6f9fc;
+  --muted-foreground: #697386;
+  --accent: #eeedfd;
+  --accent-foreground: #0a2540;
+  --destructive: #df1b41;
+  --destructive-foreground: #ffffff;
+  --border: #e3e8ee;
+  --input: #e3e8ee;
+  --ring: #635bff;
+  --chart-1: #635bff;
+  --chart-2: #0cb5c7;
+  --chart-3: #00d924;
+  --chart-4: #ff5630;
+  --chart-5: #ffab00;
+  --success: #00d924;
+  --warning: #ffab00;
+}
+
+/* Dark — Linear-inspired */
+.dark {
+  --background: #08090a;
+  --foreground: #f7f8f8;
+  --card: #1c1d1f;
+  --card-foreground: #f7f8f8;
+  --popover: #1c1d1f;
+  --popover-foreground: #f7f8f8;
+  --primary: #5e6ad2;
+  --primary-foreground: #ffffff;
+  --secondary: #1c1d1f;
+  --secondary-foreground: #f7f8f8;
+  --muted: #1c1d1f;
+  --muted-foreground: #8a8f98;
+  --accent: #26272b;
+  --accent-foreground: #f7f8f8;
+  --destructive: #eb5757;
+  --destructive-foreground: #ffffff;
+  --border: #2a2b2d;
+  --input: #2a2b2d;
+  --ring: #5e6ad2;
+  --chart-1: #5e6ad2;
+  --chart-2: #26b5ce;
+  --chart-3: #4cd964;
+  --chart-4: #ff453a;
+  --chart-5: #ff9f0a;
+  --success: #4cd964;
+  --warning: #ff9f0a;
+}
+
+/* Sepia — warm paper */
+.sepia {
+  --background: #f4ecd8;
+  --foreground: #3d2817;
+  --card: #faf4e1;
+  --card-foreground: #3d2817;
+  --popover: #faf4e1;
+  --popover-foreground: #3d2817;
+  --primary: #c44536;
+  --primary-foreground: #faf4e1;
+  --secondary: #ede0c0;
+  --secondary-foreground: #3d2817;
+  --muted: #ede0c0;
+  --muted-foreground: #7a5f3f;
+  --accent: #e8d5a8;
+  --accent-foreground: #3d2817;
+  --destructive: #8b2d24;
+  --destructive-foreground: #faf4e1;
+  --border: #d4c5a0;
+  --input: #d4c5a0;
+  --ring: #c44536;
+  --chart-1: #c44536;
+  --chart-2: #7a5f3f;
+  --chart-3: #5c7a4d;
+  --chart-4: #8b6f3d;
+  --chart-5: #3d2817;
+  --success: #5c7a4d;
+  --warning: #8b6f3d;
+}

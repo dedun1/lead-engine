@@ -99,7 +99,7 @@ export function HealthRow({
           '—'
         )}
       </TableCell>
-      <TableCell className={row.consecutive_failures && row.consecutive_failures >= 3 ? 'text-red-600 font-medium' : ''}>
+      <TableCell className={row.consecutive_failures && row.consecutive_failures >= 3 ? 'text-destructive font-medium' : ''}>
         {row.consecutive_failures ?? 0}
       </TableCell>
       <TableCell className="max-w-[200px]">

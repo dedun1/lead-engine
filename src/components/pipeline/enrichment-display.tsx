@@ -29,12 +29,9 @@ function formatSourceLogLine(e: SourceLogEntry): string {
   return `${e.source} · ${status} · ${ms}ms${e.error ? ` · ${e.error}` : ''}`;
 }
 
-const STATUS_CLASS: Record<string, string> = {
-  verified: 'bg-green-100 text-green-800',
-  risky: 'bg-yellow-100 text-yellow-800',
-  invalid: 'bg-red-100 text-red-800',
-  unverified: 'bg-gray-100 text-gray-700',
-};
+import { EMAIL_STATUS_CLASS } from '@/lib/ui/semantic-classes';
+
+const STATUS_CLASS = EMAIL_STATUS_CLASS;
 
 type Props = {
   lead: LeadDetail;
@@ -103,7 +100,7 @@ export function EnrichmentDisplay({ lead, isAdmin }: Props) {
       )}
       {lead.enriched_at && (
         <p className="flex items-center gap-1 text-xs text-muted-foreground">
-          <Check className="h-3 w-3 text-green-600" />
+          <Check className="h-3 w-3 text-chart-3" />
           Enriched {new Date(lead.enriched_at).toLocaleString()}
         </p>
       )}
