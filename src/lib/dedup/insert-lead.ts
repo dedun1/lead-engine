@@ -1,3 +1,4 @@
+import { makeLeadProvenanceLogEntry } from '@/lib/enrich/types';
 import type { RawGoogleMapsListing } from '@/lib/scrape/google-maps/types';
 import { normalize as normalizePhone } from '@/lib/phone';
 import { parseGoogleMapsHours } from '@/lib/hours';
@@ -104,12 +105,10 @@ export async function insertLeadOrSkip(
       timezone: context.timezone,
       fingerprint,
       source_log: [
-        {
-          source: 'google_maps_scrape',
-          at: new Date().toISOString(),
+        makeLeadProvenanceLogEntry({
           google_place_id: raw.google_place_id,
           types: raw.types,
-        },
+        }),
       ],
       status: 'new',
     })

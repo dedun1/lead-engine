@@ -17,8 +17,11 @@ export function mergeEnrichment(
     next.owner_last_name = patch.owner_last_name;
   }
   if (patch.owner_email && !next.owner_email) next.owner_email = patch.owner_email;
-  if (patch.owner_email_status && !next.owner_email_status) {
-    next.owner_email_status = patch.owner_email_status;
+  if (patch.owner_email_status) {
+    next.owner_email_status = preferEmailStatus(
+      next.owner_email_status,
+      patch.owner_email_status,
+    );
   }
   if (patch.owner_linkedin_url && !next.owner_linkedin_url) {
     next.owner_linkedin_url = patch.owner_linkedin_url;
@@ -45,10 +48,29 @@ function uniq(arr: string[]): string[] {
   return [...new Set(arr.filter(Boolean))];
 }
 
+const EMAIL_STATUS_RANK: Record<string, number> = {
+  verified: 0,
+  risky: 1,
+  unverified: 2,
+  invalid: 3,
+};
+
+/** Prefer stronger verification (verified beats stale unverified). */
+export function preferEmailStatus(
+  current: EnrichedFields['owner_email_status'],
+  incoming: NonNullable<EnrichedFields['owner_email_status']>,
+): EnrichedFields['owner_email_status'] {
+  if (!current) return incoming;
+  const cur = EMAIL_STATUS_RANK[current] ?? 99;
+  const inc = EMAIL_STATUS_RANK[incoming] ?? 99;
+  return inc <= cur ? incoming : current;
+}
+
 export function fieldsFound(patch: Partial<EnrichedFields>): string[] {
   const keys: string[] = [];
   if (patch.owner_name) keys.push('owner_name');
   if (patch.owner_email) keys.push('owner_email');
+  if (patch.owner_email_status) keys.push('owner_email_status');
   if (patch.owner_linkedin_url) keys.push('owner_linkedin_url');
   if (patch.emails_found?.length) keys.push('emails_found');
   if (patch.phones_found?.length) keys.push('phones_found');

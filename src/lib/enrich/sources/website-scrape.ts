@@ -98,7 +98,7 @@ export const websiteScrapeSource: EnrichmentSource = {
     try {
       const result = await withTimeout(
         scrapeWebsite(lead),
-        15_000,
+        30_000,
         'website_scrape',
       );
       const log = result.source_log?.[0];

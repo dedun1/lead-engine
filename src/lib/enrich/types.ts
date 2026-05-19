@@ -20,7 +20,28 @@ export type SourceLogEntry = {
   fields_found: string[];
   error?: string;
   duration_ms: number;
+  /** Lead-gen import row — not an enrichment attempt. */
+  kind?: 'provenance' | 'enrichment';
+  google_place_id?: string | null;
+  types?: string[];
 };
+
+/** Log entry when a lead is first inserted from the generator (not enrichment). */
+export function makeLeadProvenanceLogEntry(meta: {
+  google_place_id?: string | null;
+  types?: string[];
+}): SourceLogEntry {
+  return {
+    source: 'lead_generation',
+    kind: 'provenance',
+    attempted_at: new Date().toISOString(),
+    success: true,
+    fields_found: ['listing'],
+    duration_ms: 0,
+    google_place_id: meta.google_place_id ?? null,
+    types: meta.types,
+  };
+}
 
 export type EnrichedFields = {
   owner_name?: string;

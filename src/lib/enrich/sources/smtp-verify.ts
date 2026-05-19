@@ -64,7 +64,9 @@ export async function verifyEmailsInFields(
   currentOwnerEmail?: string | null,
 ): Promise<Partial<EnrichedFields>> {
   const start = Date.now();
-  const list = pickOwnerEmails([...new Set(emails)]);
+  const list = pickOwnerEmails(
+    [...new Set([...emails, ...(currentOwnerEmail ? [currentOwnerEmail] : [])])],
+  );
   if (!list.length) {
     return {
       source_log: [
@@ -85,10 +87,13 @@ export async function verifyEmailsInFields(
   const sorted = [...list].sort(
     (a, b) => rankStatus(statuses[a], statuses[b]) - rankStatus(statuses[b], statuses[a]),
   );
-  const best = sorted[0];
+  const ownerEmail =
+    currentOwnerEmail && statuses[currentOwnerEmail] !== undefined
+      ? currentOwnerEmail
+      : sorted[0];
   const patch: Partial<EnrichedFields> = {
-    owner_email: currentOwnerEmail ?? best,
-    owner_email_status: statuses[best] ?? 'unverified',
+    owner_email: ownerEmail,
+    owner_email_status: statuses[ownerEmail] ?? 'unverified',
     emails_found: list,
   };
 

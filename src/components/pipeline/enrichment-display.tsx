@@ -12,6 +12,23 @@ import {
 import type { LeadDetail } from '@/lib/pipeline/types';
 import type { SourceLogEntry } from '@/lib/enrich/types';
 
+function formatSourceLogLine(e: SourceLogEntry): string {
+  if (e.kind === 'provenance' || e.source === 'lead_generation') {
+    return `${e.source} · imported`;
+  }
+  // Legacy rows: lead-gen used google_maps_scrape without a success flag → showed as fail
+  if (
+    e.source === 'google_maps_scrape' &&
+    e.google_place_id != null &&
+    e.success === undefined
+  ) {
+    return 'lead_generation · imported (legacy)';
+  }
+  const ms = typeof e.duration_ms === 'number' ? e.duration_ms : 0;
+  const status = e.success ? 'ok' : 'fail';
+  return `${e.source} · ${status} · ${ms}ms${e.error ? ` · ${e.error}` : ''}`;
+}
+
 const STATUS_CLASS: Record<string, string> = {
   verified: 'bg-green-100 text-green-800',
   risky: 'bg-yellow-100 text-yellow-800',
@@ -98,8 +115,7 @@ export function EnrichmentDisplay({ lead, isAdmin }: Props) {
           <CollapsibleContent className="mt-2 max-h-40 overflow-y-auto font-mono text-xs">
             {sourceLog.map((e, i) => (
               <div key={i} className="border-b py-1">
-                {e.source} · {e.success ? 'ok' : 'fail'} · {e.duration_ms}ms
-                {e.error ? ` · ${e.error}` : ''}
+                {formatSourceLogLine(e)}
               </div>
             ))}
           </CollapsibleContent>

@@ -9,8 +9,15 @@ import { facebookSource } from './sources/facebook';
 import { verifyEmailsInFields } from './sources/smtp-verify';
 import { logEnrichmentSourceHealth } from './scraper-health';
 
-const SOURCE_TIMEOUT_MS = 15_000;
+const DEFAULT_SOURCE_TIMEOUT_MS = 15_000;
+const SOURCE_TIMEOUT_MS: Record<string, number> = {
+  website_scrape: 30_000,
+};
 const TOTAL_BUDGET_MS = 90_000;
+
+function sourceTimeoutMs(sourceName: string): number {
+  return SOURCE_TIMEOUT_MS[sourceName] ?? DEFAULT_SOURCE_TIMEOUT_MS;
+}
 
 const FREE_SOURCES = [
   websiteScrapeSource,
@@ -50,11 +57,8 @@ export async function enrichLead(
     }
 
     try {
-      const patch = await withTimeout(
-        source.enrich(lead),
-        SOURCE_TIMEOUT_MS,
-        source.name,
-      );
+      const timeoutMs = sourceTimeoutMs(source.name);
+      const patch = await withTimeout(source.enrich(lead), timeoutMs, source.name);
       accumulated = mergeEnrichment(accumulated, patch);
       const ok = (patch.source_log?.[0]?.success) ?? false;
       await logEnrichmentSourceHealth(source.name, ok, patch.source_log?.[0]?.error);
@@ -66,7 +70,7 @@ export async function enrichLead(
         success: false,
         fields_found: [],
         error: msg,
-        duration_ms: SOURCE_TIMEOUT_MS,
+        duration_ms: sourceTimeoutMs(source.name),
       });
       await logEnrichmentSourceHealth(source.name, false, msg);
     }
@@ -75,14 +79,16 @@ export async function enrichLead(
   }
 
   const emails = accumulated.emails_found ?? [];
-  if (emails.length > 0 || accumulated.owner_email) {
+  const emailToVerify =
+    accumulated.owner_email ?? lead.owner_email ?? null;
+  if (emails.length > 0 || emailToVerify) {
     try {
       const verified = await withTimeout(
         verifyEmailsInFields(
-          emails.length ? emails : [accumulated.owner_email!],
-          accumulated.owner_email ?? lead.owner_email,
+          emails,
+          emailToVerify,
         ),
-        SOURCE_TIMEOUT_MS,
+        DEFAULT_SOURCE_TIMEOUT_MS,
         'smtp_verify',
       );
       accumulated = mergeEnrichment(accumulated, verified);
