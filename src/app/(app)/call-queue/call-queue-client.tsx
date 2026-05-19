@@ -1,10 +1,10 @@
 'use client';
 
 import { useCallback, useMemo, useState, useTransition } from 'react';
-import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'sonner';
-import { Button } from '@/components/ui/button';
+import { Phone } from 'lucide-react';
+import { EmptyState } from '@/components/ui/empty-state';
 import { fetchLeadById } from '@/app/(app)/pipeline/actions-fetch';
 import { formatForTelLink } from '@/lib/phone';
 import { recordOpenerUseOnCall } from '@/lib/opener/record-use';
@@ -158,15 +158,13 @@ export function CallQueueClient({
 
   if (isEmpty) {
     return (
-      <div className="flex h-[calc(100vh-1rem)] flex-col items-center justify-center gap-4 p-8 text-center">
-        <p className="max-w-md text-muted-foreground">
-          Queue is empty. Add leads to queue from /pipeline by setting status to
-          &apos;queued&apos;.
-        </p>
-        <Button asChild variant="outline">
-          <Link href="/pipeline">Go to Pipeline</Link>
-        </Button>
-      </div>
+      <EmptyState
+        icon={Phone}
+        headline="Your queue is empty"
+        description="Add leads from Pipeline by setting their status to 'queued', or use the Hot List to find time-sensitive leads."
+        ctaLabel="Go to Pipeline"
+        ctaHref="/pipeline"
+      />
     );
   }
 

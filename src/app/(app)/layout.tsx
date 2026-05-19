@@ -1,11 +1,10 @@
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { Sidebar } from '@/components/shell/sidebar';
+import { AppShell } from '@/components/shell/app-shell';
+import { getOnboardingContext } from '@/lib/onboarding/actions';
+import { fetchNiches } from '@/app/(app)/niches/actions';
 
-// Defense-in-depth: middleware already redirects unauthenticated traffic, but
-// re-validating here means a stale cookie or middleware miss can't render
-// authenticated UI shells. getUser() round-trips to Supabase — safer than
-// getSession() which trusts the cookie.
 export default async function AppLayout({
   children,
 }: {
@@ -17,10 +16,19 @@ export default async function AppLayout({
   } = await supabase.auth.getUser();
   if (!user) redirect('/login');
 
+  const [onboarding, shortlistNiches] = await Promise.all([
+    getOnboardingContext(),
+    fetchNiches({ shortlist_only: true, search: '', countries: [] }),
+  ]);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Sidebar userEmail={user.email ?? null} />
-      <main className="ml-16 min-h-screen">{children}</main>
+      <main className="ml-16 min-h-screen">
+        <AppShell onboarding={onboarding} shortlistNiches={shortlistNiches}>
+          {children}
+        </AppShell>
+      </main>
     </div>
   );
 }

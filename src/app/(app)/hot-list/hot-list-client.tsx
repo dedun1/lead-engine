@@ -3,7 +3,8 @@
 import { useMemo, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-import { Flame, Phone, ListPlus, X } from 'lucide-react';
+import { Flame, Phone, ListPlus, X, Target } from 'lucide-react';
+import { EmptyState } from '@/components/ui/empty-state';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -206,9 +207,24 @@ export function HotListClient({
       )}
 
       {filtered.length === 0 ? (
-        <div className="rounded-lg border border-dashed p-12 text-center text-muted-foreground">
-          No active triggers. Click &quot;Refresh triggers&quot; to check now.
-        </div>
+        initialTriggers.length === 0 ? (
+          <EmptyState
+            icon={Target}
+            headline="Generate leads first"
+            description="Hot List finds time-sensitive opportunities among your existing leads. Generate some first."
+            ctaLabel="Open Lead Generator"
+            ctaHref="/generator"
+          />
+        ) : (
+          <EmptyState
+            icon={Flame}
+            headline="No active triggers right now"
+            description="Click Refresh Triggers to scan your leads for storms, review spikes, and other reasons to call now."
+            ctaLabel={isAdmin ? 'Refresh triggers' : 'View Pipeline'}
+            ctaHref={isAdmin ? undefined : '/pipeline'}
+            onCtaClick={isAdmin ? () => void refreshTriggers() : undefined}
+          />
+        )
       ) : (
         <div className="grid gap-4 md:grid-cols-2">
           {filtered.map((t) => (

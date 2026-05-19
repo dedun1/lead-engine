@@ -926,6 +926,8 @@ export type Database = {
       }
       team_members: {
         Row: {
+          anthropic_key_deferred: boolean
+          completed_onboarding: boolean
           created_at: string | null
           display_name: string | null
           email: string
@@ -935,6 +937,8 @@ export type Database = {
           updated_at: string | null
         }
         Insert: {
+          anthropic_key_deferred?: boolean
+          completed_onboarding?: boolean
           created_at?: string | null
           display_name?: string | null
           email: string
@@ -944,6 +948,8 @@ export type Database = {
           updated_at?: string | null
         }
         Update: {
+          anthropic_key_deferred?: boolean
+          completed_onboarding?: boolean
           created_at?: string | null
           display_name?: string | null
           email?: string

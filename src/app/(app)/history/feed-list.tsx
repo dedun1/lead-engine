@@ -1,6 +1,8 @@
 'use client';
 
+import { ScrollText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { EmptyState } from '@/components/ui/empty-state';
 import { Skeleton } from '@/components/ui/skeleton';
 import type { ActivityFeedEntry } from '@/lib/history/types';
 import { HistoryEntry } from './entry';
@@ -34,9 +36,13 @@ export function FeedList({
 
   if (!entries.length) {
     return (
-      <p className="py-16 text-center text-sm text-muted-foreground">
-        No activity in this period. Adjust filters or make some calls.
-      </p>
+      <EmptyState
+        icon={ScrollText}
+        headline="No activity yet"
+        description="Make a call or run a generation to start your activity feed."
+        ctaLabel="Open Call Queue"
+        ctaHref="/call-queue"
+      />
     );
   }
 

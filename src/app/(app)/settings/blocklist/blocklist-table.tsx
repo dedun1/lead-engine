@@ -3,7 +3,9 @@
 import { formatDistanceToNow } from 'date-fns';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMemo, useState, useTransition } from 'react';
+import { Ban } from 'lucide-react';
 import { toast } from 'sonner';
+import { EmptyState } from '@/components/ui/empty-state';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import {
@@ -142,10 +144,13 @@ export function BlocklistTable({
       </div>
 
       {rows.length === 0 ? (
-        <p className="rounded-lg border border-dashed p-8 text-center text-sm text-muted-foreground">
-          No blocked fingerprints. Leads get blocked when marked as wrong_number, DNC, or
-          manually via Lead Detail Drawer.
-        </p>
+        <EmptyState
+          icon={Ban}
+          headline="No blocked fingerprints"
+          description="Leads get blocked when marked as wrong_number, DNC, or manually via the Lead Detail Drawer."
+          ctaLabel="View Pipeline"
+          ctaHref="/pipeline"
+        />
       ) : (
         <Table>
           <TableHeader>

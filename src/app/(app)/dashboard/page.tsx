@@ -4,8 +4,8 @@ import { DashboardAtAGlance } from './at-a-glance';
 import { ClaudeInsightCard } from './claude-insight-card';
 import { DashboardOpenerPerformance } from './opener-performance';
 import { DashboardNichePerformance } from './niche-performance';
-import { DashboardCallHeatmap } from './call-heatmap';
-import { DashboardSentimentTags } from './sentiment-tags';
+import dynamic from 'next/dynamic';
+import { DashboardLowCallsBanner } from './dashboard-low-calls';
 import { parseDateRange, priorPeriod, weekStartingMondayCairo } from '@/lib/dashboard/date-range';
 import { fetchCallsInRange } from '@/lib/dashboard/fetch-calls';
 import {
@@ -24,6 +24,15 @@ import { createClient } from '@/lib/supabase/server';
 import type { DateRangePeriod } from '@/lib/dashboard/types';
 import { Skeleton } from '@/components/ui/skeleton';
 import type { OpenerCallDetail } from './opener-detail-drawer';
+
+const DashboardCallHeatmap = dynamic(
+  () => import('./call-heatmap').then((m) => ({ default: m.DashboardCallHeatmap })),
+  { loading: () => <Skeleton className="h-72 w-full rounded-lg" /> },
+);
+const DashboardSentimentTags = dynamic(
+  () => import('./sentiment-tags').then((m) => ({ default: m.DashboardSentimentTags })),
+  { loading: () => <Skeleton className="h-48 w-full rounded-lg" /> },
+);
 
 export const revalidate = 60;
 
@@ -121,6 +130,10 @@ export default async function DashboardPage({
 
       <DashboardAtAGlance metrics={atAGlance} />
 
+      {atAGlance.calls < 5 ? (
+        <DashboardLowCallsBanner callsMade={atAGlance.calls} />
+      ) : (
+        <>
       <DashboardOpenerPerformance
         rows={openers}
         niches={nicheList.data ?? []}
@@ -152,6 +165,9 @@ export default async function DashboardPage({
         sentiment={sentiment}
         tagInsights={tagInsights}
       />
+        </>
+      )}
     </div>
   );
 }
+

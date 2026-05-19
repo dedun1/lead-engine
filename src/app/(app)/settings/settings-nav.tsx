@@ -9,10 +9,12 @@ import {
   Key,
   MessageSquare,
   Shield,
+  User,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const LINKS = [
+  { href: '/settings/profile', label: 'Profile', icon: User },
   { href: '/settings/health', label: 'Health', icon: Activity },
   { href: '/settings/blocklist', label: 'Blocklist', icon: Ban },
   { href: '/settings/prompts', label: 'Prompts', icon: MessageSquare },

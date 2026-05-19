@@ -1,7 +1,8 @@
 'use client';
 
 import { useCallback, useState } from 'react';
-import Link from 'next/link';
+import { Inbox } from 'lucide-react';
+import { EmptyState } from '@/components/ui/empty-state';
 import { toast } from 'sonner';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
@@ -15,7 +16,12 @@ import { parsePipelineFilters, filtersToSearchParams } from '@/lib/pipeline/pars
 import { PipelineFiltersBar } from './pipeline-filters';
 import { PipelineTable } from './pipeline-table';
 import { PipelineCards } from './pipeline-cards';
-import { LeadDetailDrawer } from './lead-detail-drawer';
+import dynamic from 'next/dynamic';
+
+const LeadDetailDrawer = dynamic(
+  () => import('./lead-detail-drawer').then((m) => ({ default: m.LeadDetailDrawer })),
+  { ssr: false },
+);
 import { fetchLeads } from './actions-fetch';
 
 type TeamMember = { id: string; display_name: string | null; email: string };
@@ -120,15 +126,13 @@ export function PipelineClient({
 
   if (data.totalCount === 0 && !loading) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-xl border bg-card px-8 py-16 text-center">
-        <h2 className="text-xl font-semibold">No leads yet</h2>
-        <p className="mt-2 max-w-md text-sm text-muted-foreground">
-          Go to /generator to scrape your first batch.
-        </p>
-        <Button asChild className="mt-6">
-          <Link href="/generator">Open Lead Generator</Link>
-        </Button>
-      </div>
+      <EmptyState
+        icon={Inbox}
+        headline="No leads yet"
+        description="Generate your first batch of leads to start calling."
+        ctaLabel="Open Lead Generator"
+        ctaHref="/generator"
+      />
     );
   }
 
