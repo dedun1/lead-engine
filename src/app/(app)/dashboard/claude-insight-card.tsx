@@ -21,6 +21,14 @@ import type { Database } from '@/types/database.types';
 
 type InsightRow = Database['public']['Tables']['weekly_insights']['Row'];
 
+type InsightApiResponse = {
+  state?: string;
+  insight?: InsightRow | null;
+  calls_needed?: number;
+  calls_made?: number;
+  error?: string;
+};
+
 function parseInsights(row: InsightRow | null): WeeklyInsightPayload | null {
   if (!row) return null;
   if (row.headline_observation) {
@@ -55,29 +63,45 @@ export function ClaudeInsightCard({
 }) {
   const [insight, setInsight] = useState(initialInsight);
   const [loading, setLoading] = useState(!initialInsight && hasKey);
+  const [insufficient, setInsufficient] = useState<{
+    made: number;
+    needed: number;
+  } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const parsed = parseInsights(insight);
 
+  const loadInsight = async (force = false) => {
+    setLoading(true);
+    setError(null);
+    setInsufficient(null);
+    try {
+      const res = await fetch('/api/ai/weekly-insight', {
+        method: 'POST',
+        headers: force ? { 'Content-Type': 'application/json' } : undefined,
+        body: force ? JSON.stringify({ force_regenerate: true }) : undefined,
+      });
+      const json = (await res.json()) as InsightApiResponse;
+      if (!res.ok) throw new Error(json.error ?? 'Failed');
+      if (json.state === 'no_anthropic_key') return;
+      if (json.state === 'insufficient_data') {
+        setInsufficient({
+          made: json.calls_made ?? 0,
+          needed: json.calls_needed ?? 10,
+        });
+        return;
+      }
+      if (json.insight) setInsight(json.insight);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Could not generate');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (!hasKey || initialInsight || dismissed) return;
-    let cancelled = false;
-    (async () => {
-      try {
-        const res = await fetch('/api/ai/weekly-insight', { method: 'POST' });
-        const json = await res.json();
-        if (!res.ok) throw new Error(json.error ?? 'Failed');
-        if (!cancelled) setInsight(json.insight ?? null);
-      } catch (e) {
-        if (!cancelled) {
-          setError(e instanceof Error ? e.message : 'Could not generate');
-        }
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
+    void loadInsight(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- run once on mount
   }, [hasKey, initialInsight, dismissed]);
 
   if (!hasKey) {
@@ -110,6 +134,21 @@ export function ClaudeInsightCard({
     );
   }
 
+  if (insufficient) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>This week&apos;s Claude insights</CardTitle>
+          <CardDescription>
+            {insufficient.made} / {insufficient.needed} calls this week — make{' '}
+            {Math.max(0, insufficient.needed - insufficient.made)} more to unlock
+            AI insights.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+    );
+  }
+
   if (error) {
     return (
       <Card>
@@ -117,6 +156,11 @@ export function ClaudeInsightCard({
           <CardTitle>This week&apos;s Claude insights</CardTitle>
           <CardDescription className="text-amber-600">{error}</CardDescription>
         </CardHeader>
+        <CardContent>
+          <Button variant="outline" size="sm" onClick={() => void loadInsight(false)}>
+            Retry
+          </Button>
+        </CardContent>
       </Card>
     );
   }
@@ -137,17 +181,7 @@ export function ClaudeInsightCard({
             <Button
               variant="outline"
               size="sm"
-              onClick={async () => {
-                setLoading(true);
-                const res = await fetch('/api/ai/weekly-insight', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({ force_regenerate: true }),
-                });
-                const json = await res.json();
-                setInsight(json.insight ?? null);
-                setLoading(false);
-              }}
+              onClick={() => void loadInsight(true)}
             >
               Regenerate
             </Button>

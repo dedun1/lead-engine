@@ -40,7 +40,12 @@ async function scrapeNegativeReviews(
 ): Promise<ScrapedReview[]> {
   const browser = await chromium.launch({ headless: true });
   try {
-    const context = await browser.newContext({ userAgent: pickUserAgent() });
+    const context = await browser.newContext({
+      userAgent: pickUserAgent(),
+      locale: 'en-US',
+      timezoneId: 'America/New_York',
+      extraHTTPHeaders: { 'Accept-Language': 'en-US,en;q=0.9' },
+    });
     const page = await context.newPage();
     page.setDefaultTimeout(25_000);
     const reviewsUrl = mapsUrl.includes('?')

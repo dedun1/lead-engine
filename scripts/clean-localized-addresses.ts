@@ -23,6 +23,8 @@ const admin = createClient<Database>(url, key, {
   auth: { persistSession: false, autoRefreshToken: false },
 });
 
+const dryRun = process.argv.includes('--dry-run');
+
 async function main() {
   const { data: rows, error } = await admin
     .from('leads')
@@ -34,12 +36,17 @@ async function main() {
     process.exit(1);
   }
 
-  let updated = 0;
+  let affected = 0;
   for (const row of rows ?? []) {
     const addr = row.address;
     if (!addr || !addressNeedsLocalizationClean(addr)) continue;
     const cleaned = cleanLocalizedAddress(addr);
     if (cleaned === addr) continue;
+    affected += 1;
+    if (dryRun) {
+      console.log(`[dry-run] ${row.id}: ${addr.slice(0, 50)}… → ${cleaned.slice(0, 60)}…`);
+      continue;
+    }
     const { error: upErr } = await admin
       .from('leads')
       .update({ address: cleaned })
@@ -48,10 +55,13 @@ async function main() {
       console.error(row.id, upErr.message);
       continue;
     }
-    updated += 1;
     console.log(`Updated ${row.id}: ${addr.slice(0, 40)}… → ${cleaned.slice(0, 60)}…`);
   }
-  console.log(`Done. ${updated} lead(s) cleaned.`);
+  console.log(
+    dryRun
+      ? `Dry run complete. ${affected} lead(s) would be cleaned.`
+      : `Done. ${affected} lead(s) cleaned.`,
+  );
 }
 
 void main();
