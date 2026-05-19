@@ -1,5 +1,9 @@
 import { createHash } from 'crypto';
 import { DateTime } from 'luxon';
+import {
+  buildGoogleMapsLink,
+  resolveGooglePlaceId,
+} from '@/lib/leads/google-maps-link';
 import type { EligibleLead, ReviewCountSnapshot } from './types';
 
 export function isoWeekKey(date = new Date()): string {
@@ -72,24 +76,19 @@ export function normalizeVisibleText(html: string): string {
 }
 
 export function googleMapsUrlForLead(lead: EligibleLead): string | null {
-  const log = lead.source_log;
-  if (Array.isArray(log)) {
-    for (const entry of log) {
-      if (entry && typeof entry === 'object' && 'google_place_id' in entry) {
-        const id = (entry as { google_place_id?: string }).google_place_id;
-        if (id) {
-          return `https://www.google.com/maps/place/?q=place_id:${id}`;
-        }
-      }
-    }
-  }
-  if (lead.latitude != null && lead.longitude != null) {
-    return `https://www.google.com/maps/search/?api=1&query=${lead.latitude},${lead.longitude}`;
-  }
-  if (lead.address) {
-    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(lead.address)}`;
-  }
-  return null;
+  const hasPlace = Boolean(resolveGooglePlaceId({ source_log: lead.source_log }));
+  const hasGeo =
+    lead.latitude != null ||
+    lead.longitude != null ||
+    Boolean(lead.address?.trim());
+  if (!hasPlace && !hasGeo) return null;
+  return buildGoogleMapsLink({
+    business_name: lead.business_name,
+    address: lead.address,
+    latitude: lead.latitude,
+    longitude: lead.longitude,
+    source_log: lead.source_log,
+  });
 }
 
 export function facebookUrl(lead: EligibleLead): string | null {

@@ -1,4 +1,5 @@
 import type { Page } from 'playwright';
+import { cleanLocalizedAddress } from '@/lib/leads/address-clean';
 import type { RawGoogleMapsListing } from './types';
 import { randomThrottle } from './browser';
 
@@ -90,7 +91,8 @@ async function extractAddress(page: Page): Promise<string | null> {
   const btn = page.locator('button[data-item-id="address"]').first();
   const label = await btn.getAttribute('aria-label', { timeout: 1500 });
   if (!label) return null;
-  return stripPrefix(label, ['Address:', 'Address']) || null;
+  const raw = stripPrefix(label, ['Address:', 'Address']) || null;
+  return raw ? cleanLocalizedAddress(raw) : null;
 }
 
 async function extractHours(page: Page): Promise<string | null> {

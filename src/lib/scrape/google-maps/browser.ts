@@ -32,6 +32,11 @@ export async function launchMapsPage(): Promise<{ browser: Browser; page: Page }
 
   const context = await sharedBrowser.newContext({
     userAgent: pickUserAgent(),
+    locale: 'en-US',
+    timezoneId: 'America/New_York',
+    extraHTTPHeaders: {
+      'Accept-Language': 'en-US,en;q=0.9',
+    },
   });
   const page = await context.newPage();
   page.setDefaultTimeout(NAV_TIMEOUT_MS);
