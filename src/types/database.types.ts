@@ -1088,6 +1088,52 @@ export type Database = {
           actor_name: string | null
         }[]
       }
+      dashboard_lead_counts_by_niche: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          niche_id: string
+          total: number
+        }[]
+      }
+      dashboard_niche_call_stats: {
+        Args: {
+          p_start: string
+          p_end: string
+        }
+        Returns: {
+          niche_id: string
+          calls: number
+          answered: number
+          interested: number
+          meetings: number
+          sentiment_sum: number
+          sentiment_count: number
+        }[]
+      }
+      dashboard_generation_cost_by_niche: {
+        Args: {
+          p_start: string
+          p_end: string
+        }
+        Returns: {
+          niche_id: string
+          total_cost: number
+        }[]
+      }
+      dashboard_opener_call_stats: {
+        Args: {
+          p_start: string
+          p_end: string
+        }
+        Returns: {
+          opener_variant_id: string
+          used: number
+          answered: number
+          interested: number
+          meetings: number
+          last_called_at: string | null
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

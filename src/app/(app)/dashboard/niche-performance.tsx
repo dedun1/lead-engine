@@ -21,13 +21,8 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet';
-import type {
-  HeatmapCell,
-  NichePerformanceRow,
-  OpenerPerformanceRow,
-} from '@/lib/dashboard/types';
+import type { NichePerformanceRow, OpenerPerformanceRow } from '@/lib/dashboard/types';
 import { formatPct } from './format';
-import { dayLabels } from '@/lib/dashboard/date-range';
 
 const STATUS_ICON = { worth: '🟢', inconclusive: '🟡', skip: '🔴' } as const;
 
@@ -62,6 +57,13 @@ export function DashboardNichePerformance({
               </TableRow>
             </TableHeader>
             <TableBody>
+              {rows.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={7} className="text-center text-muted-foreground">
+                    No niches yet — add niches and run a generation job to see performance here.
+                  </TableCell>
+                </TableRow>
+              )}
               {rows.map((row) => (
                 <TableRow
                   key={row.niche_id}
@@ -116,10 +118,4 @@ export function DashboardNichePerformance({
       </Sheet>
     </>
   );
-}
-
-export function buildBestHourLabel(cell: HeatmapCell | null): string | null {
-  if (!cell || cell.calls < 5) return null;
-  const days = dayLabels();
-  return `${days[cell.day]} ${cell.hour}:00–${cell.hour + 1}:00 local (${Math.round(cell.connect_rate * 100)}% connect)`;
 }

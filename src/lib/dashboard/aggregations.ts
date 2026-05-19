@@ -6,5 +6,6 @@ export {
   getTagAnalysis,
   getSentimentCorrelation,
   topTagInsights,
+  buildBestHourLabel,
   type OpenerFilters,
 } from './aggregations/index';

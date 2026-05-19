@@ -46,6 +46,13 @@ export function DashboardSentimentTags({
             </TableRow>
           </TableHeader>
           <TableBody>
+            {tags.length === 0 && (
+              <TableRow>
+                <TableCell colSpan={4} className="text-center text-muted-foreground">
+                  No call tags logged yet for this period.
+                </TableCell>
+              </TableRow>
+            )}
             {tags.slice(0, 20).map((t) => (
               <TableRow key={t.tag}>
                 <TableCell>{t.tag}</TableCell>

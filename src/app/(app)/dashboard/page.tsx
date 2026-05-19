@@ -3,10 +3,7 @@ import { DateRangeSelector } from './date-range-selector';
 import { DashboardAtAGlance } from './at-a-glance';
 import { ClaudeInsightCard } from './claude-insight-card';
 import { DashboardOpenerPerformance } from './opener-performance';
-import {
-  DashboardNichePerformance,
-  buildBestHourLabel,
-} from './niche-performance';
+import { DashboardNichePerformance } from './niche-performance';
 import { DashboardCallHeatmap } from './call-heatmap';
 import { DashboardSentimentTags } from './sentiment-tags';
 import { parseDateRange, priorPeriod, weekStartingMondayCairo } from '@/lib/dashboard/date-range';
@@ -19,6 +16,7 @@ import {
   getTagAnalysis,
   getSentimentCorrelation,
   topTagInsights,
+  buildBestHourLabel,
 } from '@/lib/dashboard/aggregations';
 import { getAuthUser, isAdmin } from '@/lib/permissions';
 import { hasAnthropicKey } from '@/lib/ai/anthropic';

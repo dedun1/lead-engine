@@ -109,6 +109,13 @@ export function DashboardOpenerPerformance({
             </TableRow>
           </TableHeader>
           <TableBody>
+            {filtered.length === 0 && (
+              <TableRow>
+                <TableCell colSpan={6} className="text-center text-muted-foreground">
+                  No opener data for this period — log calls with an opener variant to populate this table.
+                </TableCell>
+              </TableRow>
+            )}
             {filtered.map((row, i) => (
               <TableRow
                 key={row.id}
